@@ -1,3 +1,3 @@
 # blog
-Simple blog coming up
+Simple blogging system coming up
 https://dooper.io/blog

@@ -17,10 +17,10 @@ include_once '../array/links.php';
 // Include image sizes
 include_once '../array/sizes.php';
 
+$admintitle = 'Admin';
 foreach ($adminmenu as $row){
   if ($dir . '/' . $file == $row['link']) {
     $admintitle = $row['name'];
   }
 }
-($admintitle) ?: $admintitle = 'Admin' ;
 ?>

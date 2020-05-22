@@ -9,6 +9,8 @@ $stmt = $pdo->prepare($sql);
 $stmt->bindParam(':postid', $_GET["article"], PDO::PARAM_INT);
 $stmt->execute();
 $comments = $stmt->fetchAll();
+
+$comment_err = '';
 ?>
 
 <div class="container">

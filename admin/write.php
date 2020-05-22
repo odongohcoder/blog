@@ -128,7 +128,7 @@ include_once 'start.php';
     }
   }
 
-  $subject_id = intval($_GET["subject"]);
+  (!isset($_GET["subject"])) ? $subject_id = '0' : $subject_id = intval($_GET["subject"]);
 
   $sql = "SELECT `id`, `subject` FROM `subject`";
   $stmt = $pdo->prepare($sql);
@@ -152,7 +152,7 @@ include '../template/header.php';
                   <span class="select-arrow fa fa-chevron-down"></span>
                   <select name="subject">
                     <?php foreach($subjectList as $row):?>
-                      <option value="<?php echo $row["id"]; ?>" <?php echo ($row["id"] == $subject_id ? 'selected="selected"' : ''); ?>><?php echo $row["subject"]; ?></option>
+                      <option value="<?php echo $row["id"]; ?>" <?php echo ($row["id"] == $subject_id) ? 'selected="selected"' : ''; ?>><?php echo $row["subject"]; ?></option>
                     <?php endforeach;?>
                   </select>
                 </div>

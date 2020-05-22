@@ -2,7 +2,7 @@
 include_once 'start.php';
 
   // Init vars
-  $username = $useremail = $username_err = $useremail_err = '';
+  $username = $useremail = $username_err = $useremail_err = $userimage_err = '';
 
   if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);

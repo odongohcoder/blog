@@ -2,7 +2,7 @@
 	<?php foreach($pages as $key=>$val):?>
 		<?php if(isset($_SESSION['email']) || $key == "admin"): ?>
 		<li <?php if( $val['link'] == $dir ):?>class="active"<?php endif;?>>
-			<a href="<?php echo $base . '/'; print $val['link']; ?>">
+			<a href="<?php echo $base; print $val['link']; ?>">
 				<?php if(!empty($_SESSION['users_image']) && $key == "admin"): ?>
 					<div class="users-image" style="background-image:url(<?php print $base . '/img/users/' . $_SESSION['users_image']; ?>)"></div>
 				<?php else: ?>

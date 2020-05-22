@@ -1,5 +1,3 @@
--- Adminer 4.7.7 MySQL dump
-
 SET NAMES utf8;
 SET time_zone = '+00:00';
 SET foreign_key_checks = 0;
@@ -80,6 +78,3 @@ CREATE TABLE `users` (
   `users_image` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
--- 2020-05-22 00:33:59

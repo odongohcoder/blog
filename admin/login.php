@@ -3,6 +3,10 @@
 require_once '../creds/db.php';
 // Include paths
 include_once '../template/directory.php';
+// Include meta vars
+include_once '../array/meta.php';
+// Include menu items
+include_once '../array/links.php';
 
   // Init vars
   $email = $password = '';

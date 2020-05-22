@@ -1,6 +1,12 @@
 <?php
 // Include db config
 require_once '../creds/db.php';
+// Include paths
+include_once '../template/directory.php';
+// Include meta vars
+include_once '../array/meta.php';
+// Include menu items
+include_once '../array/links.php';
 
   // Init vars
   $name = $email = $password = $confirm_password = '';
@@ -38,8 +44,6 @@ require_once '../creds/db.php';
           die('Something went wrong');
         }
       }
-
-      unset($stmt);
     }
 
     // Validate name
@@ -85,11 +89,7 @@ require_once '../creds/db.php';
           die('Something went wrong');
         }
       }
-      unset($stmt);
     }
-
-    // Close connection
-    unset($pdo);
   }
 
   include '../template/header.php';

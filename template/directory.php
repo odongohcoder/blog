@@ -1,12 +1,12 @@
 <?php
 // subfolder on top of $_SERVER['SERVER_NAME']
-$subfolder = "/blog";
+$subfolder = "/";
 // protocol http or https
 $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 'https' : 'http';
 // base url of blog
 $base = $protocol . '://' . $_SERVER['SERVER_NAME'] . $subfolder;
-// current folder
-$dir = ltrim(dirname($_SERVER['PHP_SELF']), $subfolder);
+// admin folder and file
+$dir = str_replace($subfolder,'',dirname($_SERVER['PHP_SELF']));
 // current file
 $file = basename($_SERVER['SCRIPT_FILENAME']);
 // root server

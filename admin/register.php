@@ -44,6 +44,8 @@ include_once '../array/links.php';
           die('Something went wrong');
         }
       }
+
+      unset($stmt);
     }
 
     // Validate name
@@ -89,7 +91,11 @@ include_once '../array/links.php';
           die('Something went wrong');
         }
       }
+      unset($stmt);
     }
+
+    // Close connection
+    unset($pdo);
   }
 
   include '../template/header.php';

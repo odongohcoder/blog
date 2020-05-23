@@ -17,6 +17,7 @@ include_once '../array/links.php';
 // Include image sizes
 include_once '../array/sizes.php';
 
+$datum = date("Y-m-d H:i:s");
 $admintitle = 'Admin';
 foreach ($adminmenu as $row){
   if ($dir . '/' . $file == $row['link']) {

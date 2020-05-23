@@ -2,7 +2,7 @@
 include_once 'start.php';
 
   // Init vars
-  $username = $useremail = $username_err = $useremail_err = $userimage_err = '';
+  $username = $useremail = $username_err = $useremail_err = $userimage_err = $fileName = '';
 
   if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
@@ -17,12 +17,14 @@ include_once 'start.php';
       $useremail_err = 'Please enter email';
     }
 
+  if($_FILES){
     $fileExtensions = ['jpeg','jpg','png','gif'];
     $fileName = $_FILES['userimage']['name'];
     $fileSize = $_FILES['userimage']['size'];
     $fileTmpName  = $_FILES['userimage']['tmp_name'];
     $fileType = $_FILES['userimage']['type'];
-    $fileExtension = strtolower(end(explode('.',$fileName)));
+    $tmp = explode('.', $fileName);
+    $fileExtension = strtolower(end($tmp));
     // Validate image
     if($fileName){
       if(!in_array($fileExtension,$fileExtensions)){
@@ -43,13 +45,13 @@ include_once 'start.php';
         imagedestroy($src);
       }
     }
+  }
 
     if(empty($username_err) && empty($useremail_err)){
       $sql = 'UPDATE `users` SET `name`=:name, `email`=:email, `users_image`=:users_image WHERE `id` = :id';
       if($stmt = $pdo->prepare($sql)){
         ($fileName == '') ? $fileName = $_SESSION['users_image'] : $fileName;
         ($_POST['Submit'] == 'Delete') ? $fileName = '' : $fileName;
-        session_start();
         $_SESSION['users_image'] = $fileName;
         $stmt->bindParam(':name', $username, PDO::PARAM_STR);
         $stmt->bindParam(':email', $useremail, PDO::PARAM_STR);

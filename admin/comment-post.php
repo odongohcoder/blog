@@ -1,11 +1,8 @@
 <?php
-// Init session
-session_start();
-// Include db config
-require '../creds/db.php';
+include_once 'start.php';
+
 // Init vars
-$postid = $comment = $date = '';
-$longcopy_err = '';
+$postid = $comment = $longcopy_err = '';
 // Process form when post submit
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
   // Sanitize POST
@@ -22,7 +19,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
       $stmt->bindParam(':userid', $_SESSION['id'], PDO::PARAM_INT);
       $stmt->bindParam(':comment', $comment, PDO::PARAM_STR);
       $stmt->bindParam(':postid', $postid, PDO::PARAM_STR);
-      $stmt->bindParam(':date', date("Y-m-d H:i:s"), PDO::PARAM_STR);
+      $stmt->bindParam(':date', $datum, PDO::PARAM_STR);
       // Attempt to execute
       if($stmt->execute()){
         $send = "Upload succesful";

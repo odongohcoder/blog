@@ -10,8 +10,8 @@ include_once 'start.php';
     $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
     // Put post vars in regular vars
-    $subject =  trim($_POST['subject']);
-    $allsubjects = $_POST['subjects'];
+    $subject =  isset($_POST['subject']) ? trim($_POST['subject']) : '';
+    $allsubjects = isset($_POST['subjects']) ? $_POST['subjects'] : [];
 
     // Validate subject
     if(empty($subject) && empty($allsubjects)){

@@ -3,8 +3,9 @@ include_once 'start.php';
 
   // Init vars
   $longcopy = $longcopy_files = $longcopy_text = [];
-  $title = $subtitle = $subject = $date = '';
+  $title = $subtitle = $subject = $fileName = '';
   $image_err = $title_err = $subtitle_err = $longcopy_err = $subject_err = '';
+  $fin = 'no';
 
   // Process form when post submit
   if($_SERVER['REQUEST_METHOD'] === 'POST'){
@@ -12,12 +13,12 @@ include_once 'start.php';
     $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
     // Put post vars in regular vars
-    $title =  trim($_POST['title']);
-    $subtitle = trim($_POST['subtitle']);
-    $subject = trim($_POST['subject']);
+    $title =  isset($_POST['title']) ? trim($_POST['title']) : '';
+    $subtitle =  isset($_POST['subtitle']) ? trim($_POST['subtitle']) : '';
+    $subject =  isset($_POST['subject']) ? trim($_POST['subject']) : '';
 
     // Create 2 dimensional arrays of files
-    if ($_FILES['longcopy']['name']) {
+    if (isset($_FILES['longcopy']['name'])) {
       $longcopy_files = $_FILES['longcopy']['name'];
       foreach ($longcopy_files as $key => $val){
         $longcopy_files[$key] = [];
@@ -25,14 +26,16 @@ include_once 'start.php';
       }
     }
     // Create 2 dimensional arrays of textarea
-    if ($_POST['longcopy']) {
+    if (!empty($_POST['longcopy'])) {
       $longcopy_text = $_POST['longcopy'];
       foreach ($longcopy_text as $key => $val){
         $longcopy_text[$key] = [];
         $fileParameters = ['dl=0','dl=1'];
-        $fileParameter = strtolower(end(explode('?',$val)));
+        $tmp = explode('?', $val);
+        $fileParameter = strtolower(end($tmp));
         $fileExtensions = ['mp3','m4a','ogg'];
-        $fileExtension = strtolower(end(explode('.',strtok($val, "?"))));
+        $tmp = explode('.', strtok($val, "?"));
+        $fileExtension = strtolower(end($tmp));
         if(in_array($fileExtension,$fileExtensions)){
           if(in_array($fileParameter,$fileParameters)){
             array_push($longcopy_text[$key], 'audio', strtok($val, "?") . '?dl=1');
@@ -62,13 +65,15 @@ include_once 'start.php';
     }
 
     // Prepare file upload
+  if($_FILES){
     $fileExtensions = ['jpeg','jpg','png','gif'];
     foreach ($_FILES['longcopy']['name'] as $i => $fileName){
       //$fileName = $_FILES['longcopy']['name'][$i];
       $fileSize = $_FILES['longcopy']['size'][$i];
       $fileTmpName  = $_FILES['longcopy']['tmp_name'][$i];
       $fileType = $_FILES['longcopy']['type'][$i];
-      $fileExtension = strtolower(end(explode('.',$fileName)));
+      $tmp = explode('.', $fileName);
+      $fileExtension = strtolower(end($tmp));
       // Validate image
       if($fileName){
         if(!in_array($fileExtension,$fileExtensions)){
@@ -94,12 +99,13 @@ include_once 'start.php';
         }
       }
     }
+  }
 
     // Make sure errors are empty
-    if(empty($image_err) && empty($title_err) && empty($subtitle_err) && empty($longcopy_err)){
+    if(empty($title_err) && empty($subtitle_err) && empty($image_err) && empty($longcopy_err)){
 
       // Prepare insert query
-      $sql = 'INSERT INTO post (`userid`, `title`, `subtitle`, `subject`, `date`) VALUES (:userid, :title, :subtitle, :subject, :date)';
+      $sql = 'INSERT INTO `post` (`userid`, `title`, `subtitle`, `subject`, `date`) VALUES (:userid, :title, :subtitle, :subject, :datum)';
 
       if($stmt = $pdo->prepare($sql)){
         // Bind params
@@ -107,19 +113,28 @@ include_once 'start.php';
         $stmt->bindParam(':title', $title, PDO::PARAM_STR);
         $stmt->bindParam(':subtitle', $subtitle, PDO::PARAM_STR);
         $stmt->bindParam(':subject', $subject, PDO::PARAM_STR);
-        $stmt->bindParam(':date', date("Y-m-d"), PDO::PARAM_STR);
+        $stmt->bindParam(':datum', $datum, PDO::PARAM_STR);
         $stmt->execute();
         $lastInsertId = $pdo->lastInsertId();
-        foreach ($longcopy as $item => $row){
-          $stmtTEXT = $pdo->prepare('INSERT INTO paragraph (`userid`, `paragraph`, `postid`, `item`) VALUES (:userid, :paragraph, :postid, :item)');
-          $stmtTEXT->bindParam(':userid', $_SESSION['id'], PDO::PARAM_STR);
-          $stmtTEXT->bindParam(':paragraph', $row[1], PDO::PARAM_STR);
-          $stmtTEXT->bindParam(':postid', $lastInsertId, PDO::PARAM_STR);
-          $stmtTEXT->bindParam(':item', $row[0], PDO::PARAM_STR);
-          $stmtTEXT->execute();
+
+        if(!empty($longcopy)){
+          foreach ($longcopy as $item => $row){
+            $sql = 'INSERT INTO `paragraph` (`userid`, `paragraph`, `postid`, `item`) VALUES (:userid, :paragraph, :postid, :item)';
+            $stmt = $pdo->prepare($sql);
+            $stmt->bindParam(':userid', $_SESSION['id'], PDO::PARAM_STR);
+            $stmt->bindParam(':paragraph', $row[1], PDO::PARAM_STR);
+            $stmt->bindParam(':postid', $lastInsertId, PDO::PARAM_STR);
+            $stmt->bindParam(':item', $row[0], PDO::PARAM_STR);
+            $stmt->execute();
+            if ($row === end($longcopy)) {
+              $fin = 'yes';
+            }
+          }
+        } else {
+          $fin = 'yes';
         }
-        // Attempt to execute
-        if($stmtTEXT->rowCount() > 0){
+
+        if($fin == 'yes'){
           $admintitle = "Upload successful";
         } else {
           die('Something went wrong');

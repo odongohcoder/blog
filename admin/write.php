@@ -1,12 +1,6 @@
 <?php
 include_once 'start.php';
 
-  // Init vars
-  $longcopy = $longcopy_files = $longcopy_text = [];
-  $title = $subtitle = $subject = $fileName = '';
-  $image_err = $title_err = $subtitle_err = $longcopy_err = $subject_err = '';
-  $fin = 'no';
-
   // Process form when post submit
   if($_SERVER['REQUEST_METHOD'] === 'POST'){
     // Sanitize POST
@@ -29,6 +23,8 @@ include_once 'start.php';
     if (!empty($_POST['longcopy'])) {
       $longcopy_text = $_POST['longcopy'];
       foreach ($longcopy_text as $key => $val){
+        // Validate longcopy
+        (!empty($val)) ?: $longcopy_err = 'Please enter longcopy' ;
         $longcopy_text[$key] = [];
         $fileParameters = ['dl=0','dl=1'];
         $tmp = explode('?', $val);
@@ -59,15 +55,13 @@ include_once 'start.php';
     if(empty($subtitle)){
       $subtitle_err = 'Please enter subtitle';
     }
-    // Validate longcopy
-    if(empty($longcopy)){
-      $longcopy_err = 'Please enter longcopy';
-    }
 
     // Prepare file upload
   if($_FILES){
     $fileExtensions = ['jpeg','jpg','png','gif'];
     foreach ($_FILES['longcopy']['name'] as $i => $fileName){
+      // Validate image
+      (!empty($fileName)) ?: $image_err = 'Please upload image' ;
       //$fileName = $_FILES['longcopy']['name'][$i];
       $fileSize = $_FILES['longcopy']['size'][$i];
       $fileTmpName  = $_FILES['longcopy']['tmp_name'][$i];
@@ -127,14 +121,14 @@ include_once 'start.php';
             $stmt->bindParam(':item', $row[0], PDO::PARAM_STR);
             $stmt->execute();
             if ($row === end($longcopy)) {
-              $fin = 'yes';
+              $fini = 'yes';
             }
           }
         } else {
-          $fin = 'yes';
+          $fini = 'yes';
         }
 
-        if($fin == 'yes'){
+        if($fini == 'yes';) ){
           $admintitle = "Upload successful";
         } else {
           die('Something went wrong');

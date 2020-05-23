@@ -1,9 +1,6 @@
 <?php
 include_once 'start.php';
 
-  $deletedImages = $deletedImages_err = '';
-  $img = 'img';
-
   // Delete Files
   if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
@@ -40,10 +37,9 @@ include_once 'start.php';
     }
   }
 
-  $sql = "SELECT `paragraph`.`paragraph`, `paragraph`.`id`, `paragraph`.`postid` FROM `paragraph` WHERE `paragraph`.`userid` = :userid AND `paragraph`.`item` = :item";
+  $sql = "SELECT `paragraph`.`paragraph`, `paragraph`.`id`, `paragraph`.`postid` FROM `paragraph` WHERE `paragraph`.`userid` = :userid AND `paragraph`.`item` = 'img'";
   $stmt = $pdo->prepare($sql);
   $stmt->bindParam(':userid', $_SESSION['id'], PDO::PARAM_STR);
-  $stmt->bindParam(':item', $img, PDO::PARAM_STR);
   $stmt->execute();
   $images = $stmt->fetchAll();
 

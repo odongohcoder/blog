@@ -1,9 +1,6 @@
 <?php
 include_once 'start.php';
 
-  // Init vars
-  $subject = $subject_err = '';
-
   // Process form when post submit
   if($_SERVER['REQUEST_METHOD'] === 'POST'){
     // Sanitize POST

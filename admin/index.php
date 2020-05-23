@@ -1,20 +1,17 @@
 <?php
 include_once 'start.php';
 
-  // Init vars
-  $username = $useremail = $username_err = $useremail_err = $userimage_err = $fileName = '';
-
   if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
-    $username = trim($_POST['username']);
-    $useremail = trim($_POST['useremail']);
+    $name = trim($_POST['name']);
+    $email = trim($_POST['email']);
 
-    if(empty($username)){
-      $username_err = 'Please enter name';
+    if(empty($name)){
+      $name_err = 'Please enter name';
     }
-    if(empty($useremail)){
-      $useremail_err = 'Please enter email';
+    if(empty($email)){
+      $email_err = 'Please enter email';
     }
 
   if($_FILES){
@@ -31,7 +28,7 @@ include_once 'start.php';
         $image_err = 'Please upload a JPG, PNG or GIF file';
       } elseif($fileSize > 2000000){
         $image_err = 'Please upload a file less than or equal to 2MB';
-      } elseif(empty($image_err) && empty($username_err) && empty($useremail_err)) {
+      } elseif(empty($image_err) && empty($name_err) && empty($email_err)) {
         list($width, $height) = getimagesize($fileTmpName);
         $src = imagecreatefromstring(file_get_contents($fileTmpName));
         $ratio = $width/$height;
@@ -47,14 +44,14 @@ include_once 'start.php';
     }
   }
 
-    if(empty($username_err) && empty($useremail_err)){
+    if(empty($name_err) && empty($email_err)){
       $sql = 'UPDATE `users` SET `name`=:name, `email`=:email, `users_image`=:users_image WHERE `id` = :id';
       if($stmt = $pdo->prepare($sql)){
         ($fileName == '') ? $fileName = $_SESSION['users_image'] : $fileName;
         ($_POST['Submit'] == 'Delete') ? $fileName = '' : $fileName;
         $_SESSION['users_image'] = $fileName;
-        $stmt->bindParam(':name', $username, PDO::PARAM_STR);
-        $stmt->bindParam(':email', $useremail, PDO::PARAM_STR);
+        $stmt->bindParam(':name', $name, PDO::PARAM_STR);
+        $stmt->bindParam(':email', $email, PDO::PARAM_STR);
         $stmt->bindParam(':users_image', $fileName, PDO::PARAM_STR);
         $stmt->bindParam(':id', $_SESSION['id'], PDO::PARAM_STR);
 
@@ -96,24 +93,24 @@ include_once 'start.php';
           <?php else: ?>
             <input type="file" name="userimage" accept="image/*" class="imageinput <?php echo (!empty($image_err)) ? 'is-invalid' : ''; ?>">
           <?php endif; ?>
-          <?php if ($userimage_err):?>
-            <span class="invalid-feedback"><?php print $userimage_err; ?></span>
+          <?php if ($image_err):?>
+            <span class="invalid-feedback"><?php print $image_err; ?></span>
           <?php endif; ?>
         </div>
 
         <div class="form-group">
-          <label for="username">Name</label>
-          <input name="username" type="text" value="<?php print $user[0]['name']; ?>">
-          <?php if ($username_err):?>
-            <span class="invalid-feedback"><?php print $username_err; ?></span>
+          <label for="name">Name</label>
+          <input name="name" type="text" value="<?php print $user[0]['name']; ?>">
+          <?php if ($name_err):?>
+            <span class="invalid-feedback"><?php print $name_err; ?></span>
           <?php endif; ?>
         </div>
 
         <div class="form-group">
-          <label for="useremail">Email</label>
-          <input name="useremail" type="email" value="<?php print $user[0]['email']; ?>">
-          <?php if ($useremail_err):?>
-            <span class="invalid-feedback"><?php print $useremail_err; ?></span>
+          <label for="email">Email</label>
+          <input name="email" type="email" value="<?php print $user[0]['email']; ?>">
+          <?php if ($email_err):?>
+            <span class="invalid-feedback"><?php print $email_err; ?></span>
           <?php endif; ?>
         </div>
 

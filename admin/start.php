@@ -17,11 +17,29 @@ include_once '../array/links.php';
 // Include image sizes
 include_once '../array/sizes.php';
 
-$datum = date("Y-m-d H:i:s");
+// Init vars
 $admintitle = 'Admin';
 foreach ($adminmenu as $row){
   if ($dir . '/' . $file == $row['link']) {
     $admintitle = $row['name'];
   }
 }
+$datum = date("Y-m-d H:i:s");
+$fini = 'no';
+$null = null;
+
+$fileName = $postid = '';
+$longcopy = $longcopy_err = '';
+$image = $image_err = '';
+$comment = $comment_err = '';
+$allposts = $allposts_err = '';
+$subject = $subject_err = '';
+$deletedImages = $deletedImages_err = '';
+$title = $title_err = '';
+$subtitle = $subtitle_err = '';
+$name = $name_err = '';
+$email = $email_err = '';
+
+// Init arrays
+$longcopy = $longcopy_files = $longcopy_text = [];
 ?>

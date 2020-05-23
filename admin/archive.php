@@ -1,10 +1,6 @@
 <?php
 include_once 'start.php';
 
-$allposts = $allposts_err = '';
-$null = null;
-$img = 'img';
-
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
   // Sanitize POST
   $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
@@ -21,14 +17,12 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     if ($allposts) {
 
       foreach ($allposts as $row){
-        $stmt = $pdo->prepare('UPDATE `paragraph` SET `postid`=:postid WHERE `postid` = :id AND `item` = :item');
+        $stmt = $pdo->prepare("UPDATE `paragraph` SET `postid`=:postid WHERE `postid` = :id AND `item` = 'img'");
         $stmt->bindParam(':id', $row, PDO::PARAM_STR);
-        $stmt->bindParam(':item', $img, PDO::PARAM_STR);
         $stmt->bindParam(':postid', $null, PDO::PARAM_STR);
         $stmt->execute();
-        $stmt = $pdo->prepare('DELETE FROM `paragraph` WHERE `postid` = :id AND `item` != :item');
+        $stmt = $pdo->prepare("DELETE FROM `paragraph` WHERE `postid` = :id AND `item` != 'img'");
         $stmt->bindParam(':id', $row, PDO::PARAM_STR);
-        $stmt->bindParam(':item', $img, PDO::PARAM_STR);
         $stmt->execute();
         $stmt = $pdo->prepare('DELETE FROM `comment` WHERE `postid` = :id');
         $stmt->bindParam(':id', $row, PDO::PARAM_STR);

@@ -128,7 +128,7 @@ include_once 'start.php';
           $fini = 'yes';
         }
 
-        if($fini == 'yes';) ){
+        if($fini == 'yes'){
           $admintitle = "Upload successful";
         } else {
           die('Something went wrong');

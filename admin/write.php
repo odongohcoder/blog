@@ -120,15 +120,10 @@ include_once 'start.php';
             $stmt->bindParam(':postid', $lastInsertId, PDO::PARAM_STR);
             $stmt->bindParam(':item', $row[0], PDO::PARAM_STR);
             $stmt->execute();
-            if ($row === end($longcopy)) {
-              $fini = 'yes';
-            }
           }
-        } else {
-          $fini = 'yes';
         }
 
-        if($fini == 'yes'){
+        if($row === end($longcopy) || empty($longcopy)){
           $admintitle = "Upload successful";
         } else {
           die('Something went wrong');

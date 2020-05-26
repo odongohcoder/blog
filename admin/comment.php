@@ -33,14 +33,15 @@ $comment_err = '';
 <!-- START COMMENT FORM-->
 <?php if (isset($_SESSION['email']) && $base):?>
 
-<div class="inner">
-  <form action="admin/comment-post.php" method="POST" enctype="multipart/form-data">
-    <div id="Comments">
-      <input name="postid" type="hidden" value="<?php echo $_GET['article']; ?>">
+<form action="admin/comment-post.php" method="POST" enctype="multipart/form-data">
+  <div class="outer">
+    <div class="inner">
+      <div id="Comments">
+        <input name="postid" type="hidden" value="<?php echo $_GET['article']; ?>">
         <div class="form-group">
           <textarea name="comment" class="<?php echo (!empty($comment_err)) ? 'is-invalid' : ''; ?>" required></textarea>
           <?php if ($comment_err):?>
-            <span class="invalid-feedback"><?php echo $comment_err; ?></span>
+          <span class="invalid-feedback"><?php echo $comment_err; ?></span>
           <?php endif; ?>
         </div>
       </div>
@@ -50,8 +51,8 @@ $comment_err = '';
           <button type="submit" value="Add post">Add comment</button>
         </div>
       </div>
-    </form>
+    </div>
   </div>
-</div>
+</form>
 
 <?php endif; ?>

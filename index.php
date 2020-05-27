@@ -5,12 +5,8 @@ session_start();
 require_once 'creds/db.php';
 // Include paths
 include_once 'template/directory.php';
-// Include meta vars
-include_once 'array/meta.php';
 // Include menu items
 include_once 'array/links.php';
-// Incliude head
-include 'template/header.php';
 
   if (isset($_GET["article"])):
     $sql = "
@@ -40,8 +36,11 @@ include 'template/header.php';
   endif;
   $total = $stmt->rowCount();
 
-//print_r($result);
-// print $total;
+  // Include meta vars
+  include_once 'array/meta.php';
+  // Include head
+  include 'template/header.php';
+
 ?>
 
     <!-- START CONTAINER -->
@@ -105,21 +104,18 @@ include 'template/header.php';
 
         <?php include 'admin/comment.php';?>
 
-
       <?php elseif($total > 0):?>
         <div id="grid">
       <?php foreach($result as $i => $row):?>
         <div class="item-blog">
           <div class="inner">
-            <a href="index.php?article=<?php echo $row[0];?>">
+            <a href="<?php echo $base;?>index.php?article=<?php echo $row[0];?>">
               <div class="clmn leftcolumn">
 
                 <?php
-                $img = "img";
-                $sql = "SELECT `paragraph`.`paragraph` FROM `paragraph` WHERE `paragraph`.`postid` = :article_id AND `paragraph`.`item` = :item";
+                $sql = "SELECT `paragraph`.`paragraph` FROM `paragraph` WHERE (`paragraph`.`postid` = :article_id AND `paragraph`.`item` = 'img')";
                 $stmt = $pdo->prepare($sql);
                 $stmt->bindParam(':article_id', $row[0], PDO::PARAM_INT);
-                $stmt->bindParam(':item', $img, PDO::PARAM_INT);
                 $stmt->execute();
                 $image = $stmt->fetchAll();
                 ?>
@@ -132,7 +128,7 @@ include 'template/header.php';
                     $orientation = "portrait";
                   endif;
                   ?>
-                  <img src="img/article/small/<?php echo $image[0]["paragraph"]; ?>">
+                  <img src="<?php echo $base;?>img/article/small/<?php echo $image[0]["paragraph"]; ?>">
                 <?php endif; ?>
               </div>
           <div class="clmn rightcolumn <?php if(!$image): print 'no-image'; else: print $orientation; endif; ?>">
@@ -147,7 +143,7 @@ include 'template/header.php';
               </div>
               <div class="inner">
                 <div class="author">
-                  <div class="users-image" style="background-image:url('img/users/<?php print $row['users_image']; ?>')"></div>
+                  <div class="users-image" style="background-image:url('<?php echo $base;?>img/users/<?php print $row['users_image']; ?>')"></div>
                   <div class="users-name"><strong><?php echo $row['name'];?></strong> on <?php echo date("d.m.y", strtotime($row['date']));?></div>
                 </div>
               </div>

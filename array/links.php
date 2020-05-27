@@ -2,7 +2,7 @@
 $pages = [
   'admin' => [
     'name' => 'Admin',
-    'link' => 'admin',
+    'link' => 'admin/',
     'icon' => 'user.svg'
   ],
   'logout' => [

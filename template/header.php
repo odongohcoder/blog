@@ -9,7 +9,8 @@
 		<meta name="theme-color" content="#ffffff">
 		<meta name="description" content="<?php echo $meta["META_DESCRIPTION"]; ?>">
 		<meta name="keywords" content="<?php echo $meta["META_KEYWORDS"]; ?>">
-		<meta name="author" content="Joep Dooper">
+		<meta name="author" content="<?php echo $meta["AUTHOR"]; ?>">
+		<meta name="content_origin"  content="<?php echo $meta["DATE"]; ?>">
 		<meta name="robots" content="index, follow">
 		<meta name="revisit-after" content="3 days">
 		<meta property="og:title" content="<?php echo $meta["META_TITLE"]; ?>">
@@ -69,7 +70,7 @@
 					<?php endif;?>
 					<div class="logo">
 						<a id="logo" href="<?php echo $base;?>">
-							<?php echo $meta["META_TITLE"]; ?>
+							Sincerity
 						</a>
 					</div>
 					<label class="dark-mode-label switch" for="dark-mode">
@@ -79,8 +80,3 @@
 						<?php include 'menu.php'; ?>
 					</nav>
 			</header>
-
-			<?php
-			!isset($_GET["subject"]) ?: $subject_id = intval($_GET["subject"]);
-		  !isset($_GET["article"]) ?: $article_id = intval($_GET["article"]);
-			?>

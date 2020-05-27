@@ -10,8 +10,6 @@ if(!isset($_SESSION['email']) || empty($_SESSION['email'])){
 require_once '../creds/db.php';
 // Include paths
 include_once '../template/directory.php';
-// Include meta vars
-include_once '../array/meta.php';
 // Include menu items
 include_once '../array/links.php';
 // Include image sizes
@@ -25,7 +23,6 @@ foreach ($adminmenu as $row){
   }
 }
 $datum = date("Y-m-d H:i:s");
-$fini = 'no';
 $null = null;
 
 $fileName = $postid = '';
@@ -42,4 +39,7 @@ $email = $email_err = '';
 
 // Init arrays
 $longcopy = $longcopy_files = $longcopy_text = [];
+
+// Include meta vars
+include_once '../array/meta.php';
 ?>

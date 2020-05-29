@@ -13,7 +13,6 @@ $comments = $stmt->fetchAll();
 $comment_err = '';
 ?>
 
-<div class="container">
   <div class="comment-blog">
     <div class="outer">
       <div class="inner"><p><strong>Comments</strong></p></div>
@@ -28,7 +27,6 @@ $comment_err = '';
       <?php endforeach;?>
     </div>
   </div>
-</div>
 
 <!-- START COMMENT FORM-->
 <?php if (isset($_SESSION['email']) && $base):?>

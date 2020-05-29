@@ -479,7 +479,8 @@ form .users-image {
 }
 input.radio-hidden,
 .longcopyDIV,
-.imageDIV {
+.imageDIV,
+.urlDIV {
 	display: none;
 }
 input.radio-hidden:checked ~ .step {

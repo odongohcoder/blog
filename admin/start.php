@@ -28,6 +28,7 @@ $null = null;
 $fileName = $postid = '';
 $longcopy = $longcopy_err = '';
 $image = $image_err = '';
+$url = $url_err = '';
 $comment = $comment_err = '';
 $allposts = $allposts_err = '';
 $subject = $subject_err = '';

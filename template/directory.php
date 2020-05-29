@@ -1,6 +1,6 @@
 <?php
 // subfolder on top of $_SERVER['SERVER_NAME']
-$subfolder = "/backup/20200522/";
+$subfolder = "/";
 // protocol http or https
 $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 'https' : 'http';
 // base url of blog

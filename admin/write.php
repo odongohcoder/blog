@@ -194,9 +194,17 @@ include '../template/header.php';
               <?php endif; ?>
             </div>
 
+            <div class="form-group urlDIV">
+              <label>Url</label>
+              <input type="url" name="" class="urlinput <?php echo (!empty($url_err)) ? 'is-invalid' : ''; ?>">
+              <?php if ($url_err):?>
+                <span class="invalid-feedback"><?php echo $url_err; ?></span>
+              <?php endif; ?>
             </div>
 
-            <button type="button" onclick="addTextField()">Add text</button><button type="button" onclick="addImageField()">Add image (upload)</button>
+            </div>
+
+            <button type="button" onclick="addTextField()">Add text</button><button type="button" onclick="addImageField()">Add image (upload)</button><button type="button" onclick="addUrlField()">Add url</button>
 
             <div class="form-row">
               <div class="col">
@@ -223,6 +231,15 @@ include '../template/header.php';
             cln.classList.remove("imageDIV");
             cln.getElementsByClassName('imageinput')[0].value = "";
             cln.getElementsByClassName('imageinput')[0].setAttribute("name","longcopy[" + i + "]");
+            document.getElementById('AddPost').appendChild(cln);
+            ++i;
+          }
+          function addUrlField() {
+            var elmnt = document.getElementsByClassName('urlDIV')[0];
+            var cln = elmnt.cloneNode(true);
+            cln.classList.remove("urlDIV");
+            cln.getElementsByClassName('urlinput')[0].value = "";
+            cln.getElementsByClassName('urlinput')[0].setAttribute("name","longcopy[" + i + "]");
             document.getElementById('AddPost').appendChild(cln);
             ++i;
           }

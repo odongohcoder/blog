@@ -3,7 +3,7 @@ Simple blogging system coming up
 
 ## Setup
 1. Download files
-2. Set root folder of blog on `$subfolder` [directory.php](https://github.com/joepdooper/blog/blob/development/template/directory.php)
+2. Set root folder of blog on `$subfolder` [template/directory.php](https://github.com/joepdooper/blog/blob/development/template/directory.php)
 
 ## Database
 1. Create database

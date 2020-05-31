@@ -122,6 +122,7 @@ include_once 'start.php';
 
       </form>
     </div>
+    <?php include_once 'setting.php'; ?>
 
   </div>
 </div>

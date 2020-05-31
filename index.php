@@ -46,7 +46,7 @@ include_once 'array/links.php';
     <!-- START CONTAINER -->
     <div class="container">
 
-      <?php if (isset($_GET["article"]) && $result[0]['title']):?>
+      <?php if (isset($_GET["article"]) && isset($result[0]['title'])):?>
 
         <div class="article-blog">
           <article>

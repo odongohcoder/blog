@@ -29,15 +29,18 @@ include_once 'start.php';
         $fileParameters = ['dl=0','dl=1'];
         $tmp = explode('?', $val);
         $fileParameter = strtolower(end($tmp));
-        $fileExtensions = ['mp3','m4a','ogg'];
+        $fileExtensionsAudio = ['mp3','m4a','ogg'];
+        $fileExtensionsImages = ['jpeg','jpg','png','gif'];
         $tmp = explode('.', strtok($val, "?"));
         $fileExtension = strtolower(end($tmp));
-        if(in_array($fileExtension,$fileExtensions)){
+        if(in_array($fileExtension,$fileExtensionsAudio)){
           if(in_array($fileParameter,$fileParameters)){
             array_push($longcopy_text[$key], 'audio', strtok($val, "?") . '?dl=1');
           } else {
             array_push($longcopy_text[$key], 'audio', $val);
           }
+        } elseif(in_array($fileExtension,$fileExtensionsImages)){
+          array_push($longcopy_text[$key], 'img', $val);
         } else {
           array_push($longcopy_text[$key], 'txt', $val);
         }

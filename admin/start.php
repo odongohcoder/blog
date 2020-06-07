@@ -9,7 +9,7 @@ if(!isset($_SESSION['email']) || empty($_SESSION['email'])){
 // Include db config
 require_once '../creds/db.php';
 // Include paths
-include_once '../template/directory.php';
+include_once '../array/directory.php';
 // Include menu items
 include_once '../array/links.php';
 // Include image sizes

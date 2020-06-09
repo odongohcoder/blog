@@ -38,9 +38,10 @@ include_once 'array/links.php';
 
   // Include meta vars
   include_once 'array/meta.php';
+  // Frontend META_TITLE
+  isset($_GET["article"]) ?: $meta["META_TITLE"] = 'Sincerity';
   // Include head
   include 'template/header.php';
-
 ?>
 
     <!-- START CONTAINER -->

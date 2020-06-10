@@ -1,8 +1,8 @@
 <?php
-// Include db config
-require_once '../creds/db.php';
 // Include paths
 include_once '../array/directory.php';
+// Include db config
+require_once '../creds/db.php';
 // Include meta vars
 include_once '../array/meta.php';
 // Include menu items
@@ -105,28 +105,35 @@ include_once '../array/links.php';
     <div class="wrapper">
       <div class="inner">
 
-          <h2>Create Account</h2>
-          <p>Fill in this form to register</p>
+          <h1>Register</h1>
           <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
             <div class="form-group">
               <label for="name">Name</label>
               <input type="text" name="name" class="form-control form-control-lg <?php echo (!empty($name_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $name; ?>">
-              <span class="invalid-feedback"><?php echo $name_err; ?></span>
+              <?php if ($name_err):?>
+                <span class="invalid-feedback"><?php echo $name_err; ?></span>
+              <?php endif; ?>
             </div>
             <div class="form-group">
               <label for="email">Email Address</label>
               <input type="email" name="email" class="form-control form-control-lg <?php echo (!empty($email_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $email; ?>">
-              <span class="invalid-feedback"><?php echo $email_err; ?></span>
+              <?php if ($email_err):?>
+                <span class="invalid-feedback"><?php echo $email_err; ?></span>
+              <?php endif; ?>
             </div>
             <div class="form-group">
               <label for="password">Password</label>
               <input type="password" name="password" class="form-control form-control-lg <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $password; ?>">
-              <span class="invalid-feedback"><?php echo $password_err; ?></span>
+              <?php if ($password_err):?>
+                <span class="invalid-feedback"><?php echo $password_err; ?></span>
+              <?php endif; ?>
             </div>
             <div class="form-group">
               <label for="confirm_password">Confirm Password</label>
               <input type="password" name="confirm_password" class="form-control form-control-lg <?php echo (!empty($confirm_password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $confirm_password; ?>">
-              <span class="invalid-feedback"><?php echo $confirm_password_err; ?></span>
+              <?php if ($confirm_password_err):?>
+                <span class="invalid-feedback"><?php echo $confirm_password_err; ?></span>
+              <?php endif; ?>
             </div>
 
             <div class="form-row">

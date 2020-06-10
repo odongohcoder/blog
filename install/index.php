@@ -48,7 +48,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
       $stmt = $pdo->prepare("SET foreign_key_checks=0");
       $stmt->execute();
-      $sql = file_get_contents("blog_2020-05-30.sql");
+      $sql = file_get_contents("blog.sql");
       $stmt = $pdo->prepare($sql);
       $stmt->execute();
       $stmt = $pdo->prepare("SET foreign_key_checks=1");

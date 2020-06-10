@@ -1,47 +1,60 @@
 <?php
 // Init session
 session_start();
-// Include db config
-require_once 'creds/db.php';
 // Include paths
 include_once 'array/directory.php';
+// Include db config
+require_once 'creds/db.php';
+// Settings
+$sql = "SELECT `bool` FROM `settings`";
+$stmt = $pdo->prepare($sql);
+$stmt->execute();
+$settings = $stmt->fetchAll();
+$private = $settings["0"];
+
+// Check if blog is private
+if((!isset($_SESSION['email']) || empty($_SESSION['email'])) && $private["bool"] == '1'){
+  header('location: admin/');
+  exit;
+}
+
 // Include menu items
 include_once 'array/links.php';
 
-  if (isset($_GET["article"])):
-    $sql = "
-    SELECT `post`.`id`, `post`.`date`, `post`.`userid`, `post`.`title`, `post`.`subtitle`, `subject`.`id`, `subject`.`subject`, `users`.`id`, `users`.`name`, `users`.`users_image` FROM `post`
-    INNER JOIN `subject` ON `subject`.`id` = `post`.`subject`
-    INNER JOIN `users` ON `users`.`id` = `post`.`userid`
-    WHERE `post`.`id` = :article_id;
-    ";
-    $stmt = $pdo->prepare($sql);
-    $stmt->bindParam(':article_id', $article_id, PDO::PARAM_INT);
-    $stmt->execute();
-    $result = $stmt->fetchAll();
-  else:
-    $sql = "
-    SELECT `post`.`id`, `post`.`date`, `post`.`userid`, `post`.`title`, `post`.`subtitle`, `subject`.`id`, `subject`.`subject`, `users`.`id`, `users`.`name`, `users`.`users_image` FROM `post`
-    INNER JOIN `subject` ON `subject`.`id` = `post`.`subject`
-    INNER JOIN `users` ON `users`.`id` = `post`.`userid`
-    ";
-    if (isset($_GET["subject"])):
-      $sql .= " WHERE `subject`.`id` = :subject_id";
-    endif;
-    $sql .= " ORDER BY `post`.`id` DESC";
-    $stmt = $pdo->prepare($sql);
-    $stmt->bindParam(':subject_id', $subject_id, PDO::PARAM_INT);
-    $stmt->execute();
-    $result = $stmt->fetchAll();
+if (isset($_GET["article"])):
+  $sql = "
+  SELECT `post`.`id`, `post`.`date`, `post`.`userid`, `post`.`title`, `post`.`subtitle`, `subject`.`id`, `subject`.`subject`, `users`.`id`, `users`.`name`, `users`.`users_image` FROM `post`
+  INNER JOIN `subject` ON `subject`.`id` = `post`.`subject`
+  INNER JOIN `users` ON `users`.`id` = `post`.`userid`
+  WHERE `post`.`id` = :article_id;
+  ";
+  $stmt = $pdo->prepare($sql);
+  $stmt->bindParam(':article_id', $article_id, PDO::PARAM_INT);
+  $stmt->execute();
+  $result = $stmt->fetchAll();
+else:
+  $sql = "
+  SELECT `post`.`id`, `post`.`date`, `post`.`userid`, `post`.`title`, `post`.`subtitle`, `subject`.`id`, `subject`.`subject`, `users`.`id`, `users`.`name`, `users`.`users_image` FROM `post`
+  INNER JOIN `subject` ON `subject`.`id` = `post`.`subject`
+  INNER JOIN `users` ON `users`.`id` = `post`.`userid`
+  ";
+  if (isset($_GET["subject"])):
+    $sql .= " WHERE `subject`.`id` = :subject_id";
   endif;
-  $total = $stmt->rowCount();
+  $sql .= " ORDER BY `post`.`id` DESC";
+  $stmt = $pdo->prepare($sql);
+  $stmt->bindParam(':subject_id', $subject_id, PDO::PARAM_INT);
+  $stmt->execute();
+  $result = $stmt->fetchAll();
+endif;
+$total = $stmt->rowCount();
 
-  // Include meta vars
-  include_once 'array/meta.php';
-  // Frontend META_TITLE
-  isset($_GET["article"]) ?: $meta["META_TITLE"] = 'Sincerity';
-  // Include head
-  include 'template/header.php';
+// Include meta vars
+include_once 'array/meta.php';
+// Frontend META_TITLE
+isset($_GET["article"]) ?: $meta["META_TITLE"] = 'Sincerity';
+// Include head
+include 'template/header.php';
 ?>
 
     <!-- START CONTAINER -->
@@ -158,11 +171,12 @@ include_once 'array/links.php';
       </div>
 
     <?php else:?>
-      <?php
-      include 'template/error.php';
-      ?>
 
-      <?php endif;?>
+    <?php
+    include 'template/error.php';
+    ?>
+
+    <?php endif;?>
     </div>
     <!-- END CONTAINER -->
 

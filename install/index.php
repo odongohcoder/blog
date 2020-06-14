@@ -1,6 +1,6 @@
 <?php
 // Include paths
-include_once '../template/directory.php';
+include_once '../array/directory.php';
 // Include meta vars
 include_once '../array/meta.php';
 // Include menu items

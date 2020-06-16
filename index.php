@@ -123,7 +123,7 @@ include 'template/header.php';
       <?php foreach($result as $i => $row):?>
         <div class="item-blog">
           <div class="inner">
-            <a href="<?php echo $base;?>index.php?article=<?php echo $row[0];?>">
+            <a href="<?php echo _BASE;?>index.php?article=<?php echo $row[0];?>">
               <div class="clmn leftcolumn">
 
                 <?php
@@ -142,7 +142,7 @@ include 'template/header.php';
                     $orientation = "portrait";
                   endif;
                   ?>
-                  <img src="<?php echo $base;?>img/article/small/<?php echo $image[0]["paragraph"]; ?>">
+                  <img src="<?php echo _BASE;?>img/article/small/<?php echo $image[0]["paragraph"]; ?>">
                 <?php endif; ?>
               </div>
           <div class="clmn rightcolumn <?php if(!$image): print 'no-image'; else: print $orientation; endif; ?>">
@@ -157,7 +157,7 @@ include 'template/header.php';
               </div>
               <div class="inner">
                 <div class="author">
-                  <div class="users-image" style="background-image:url('<?php echo $base;?>img/users/<?php print $row['users_image']; ?>')"></div>
+                  <div class="users-image" style="background-image:url('<?php echo _BASE;?>img/users/<?php print $row['users_image']; ?>')"></div>
                   <div class="users-name"><strong><?php echo $row['name'];?></strong> on <?php echo date("d.m.y", strtotime($row['date']));?></div>
                 </div>
               </div>

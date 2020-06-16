@@ -86,7 +86,7 @@ include_once 'start.php';
             $new_width = ($width > $valDim) ? $valDim : $width;
             $new_height = ($width > $valDim) ? $valDim/$ratio : $height;
             $subfolder = ($keyDim == 'large') ? '' : $keyDim . '/';
-            $uploadPath = $currentDir . $uploadDirectory . $subfolder . basename($fileName);
+            $uploadPath = _CURRENTDIR . _UPLOADDIRECTORY . $subfolder . basename($fileName);
             $dst = imagecreatetruecolor($new_width, $new_height);
             imagecopyresampled($dst, $src, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
             imagejpeg($dst, $uploadPath, 100);

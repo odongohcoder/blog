@@ -54,8 +54,8 @@
 
 		<title><?php echo $meta["META_TITLE"]; ?></title>
 
-		<link href="<?php echo $base;?>/css/normalize.css" rel="stylesheet">
-		<link href="<?php echo $base;?>/css/style.css" rel="stylesheet">
+		<link href="<?php echo _BASE;?>template/css/normalize.css" rel="stylesheet">
+		<link href="<?php echo _BASE;?>template/css/style.css" rel="stylesheet">
 
 	</head>
 
@@ -65,16 +65,16 @@
 			<header id="header">
 					<?php if (isset($_GET["article"])):?>
 						<a href="index.php" class="return">
-							<?php echo file_get_contents($base . '/img/icon/' . "arrow-left.svg"); ?>
+							<?php echo file_get_contents(_BASE . '/img/icon/' . "arrow-left.svg"); ?>
 						</a>
 					<?php endif;?>
 					<div class="logo">
-						<a id="logo" href="<?php echo $base;?>">
-							Sincerity
+						<a id="logo" href="<?php echo _BASE;?>">
+							Sincerity&reg;
 						</a>
 					</div>
 					<label class="dark-mode-label switch" for="dark-mode">
-						<?php echo file_get_contents($base . '/img/icon/' . "sun.svg"); ?><?php echo file_get_contents($base . '/img/icon/' . "moon.svg"); ?>
+						<?php echo file_get_contents(_BASE . '/img/icon/' . "sun.svg"); ?><?php echo file_get_contents(_BASE . '/img/icon/' . "moon.svg"); ?>
 					</label>
 					<nav class="menu" id="main">
 						<?php include 'menu.php'; ?>

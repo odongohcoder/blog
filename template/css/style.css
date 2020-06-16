@@ -122,10 +122,11 @@ html, body {
 	margin: 0px;
 }
 body  {
-	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+	font-family: Circular, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 	font-size: 10px;
   line-height: 1;
   font-kerning: auto;
+  font-feature-settings:"liga", "kern";
 	color: #222;
 	margin: 0;
 	padding: 0;
@@ -173,7 +174,7 @@ select:-moz-focusring {
     text-shadow: 0 0 0 #000;
 }
 button, input, optgroup, select, textarea {
-	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+	font-family: Circular, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   line-height: 1;
 }
 label,
@@ -218,20 +219,22 @@ button,
 input[type="submit"],
 button,
 nav ul li a,
-a.subject {
+a.subject,
+.subject {
 	padding:10px;
 	text-decoration: none;
 	display: inline-block;
 	border-radius: 0px;
-	font-size: 10px;
 	font-weight: bolder;
 	letter-spacing: 0.5px;
-	text-transform: uppercase;
 	border:0;
 	width:auto;
+  text-transform: lowercase;
+  font-variant: small-caps;
+  font-feature-settings: "smcp" 1;
+  font-size: 12px;
 }
 h1, h2, h3, h4, h5, h6 {
-	font-family: Roboto,-apple-system,BlinkMacSystemFont,"Helvetica Neue","Segoe UI","Oxygen","Ubuntu","Cantarell","Open Sans",sans-serif;
 	font-weight:normal;
 	margin:0;
 }
@@ -374,13 +377,9 @@ form {
   max-width: 660px;
   margin: 0 auto;
 }
-a.subject {
-  padding:0;
-}
+a.subject,
 .subject {
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  font-weight: bolder;
+  padding:0;
 }
 .users-image {
 	width: 30px;

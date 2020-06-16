@@ -1,5 +1,5 @@
 <?php
-($base)?: die('Something went wrong');
+defined('_BASE') or die('Something went wrong');
 
 define('DB_SERVER', '127.0.0.1');
 define('DB_USERNAME', 'root');

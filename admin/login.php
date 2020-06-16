@@ -54,6 +54,11 @@ include_once '../array/links.php';
                 $_SESSION['name'] = $row['name'];
                 $_SESSION['id'] = $row['id'];
                 $_SESSION['users_image'] = $row['users_image'];
+                if ($row['admin'] == '1'){
+                  $_SESSION['admin'] = $row['admin'];
+                } else {
+                  unset($_SESSION['admin']);
+                }
                 header('location: index.php');
               } else {
                 // Display wrong password message

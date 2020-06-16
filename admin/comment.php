@@ -29,7 +29,7 @@ $comment_err = '';
   </div>
 
 <!-- START COMMENT FORM-->
-<?php if (isset($_SESSION['email']) && $base):?>
+<?php if (isset($_SESSION['email']) && _BASE):?>
 
 <form action="admin/comment-post.php" method="POST" enctype="multipart/form-data">
   <div class="outer">

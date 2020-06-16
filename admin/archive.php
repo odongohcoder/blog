@@ -82,7 +82,7 @@ include '../template/header.php';
                   <td><?php echo date("d.m.y", strtotime($row['date']));?></td>
                   <td>
                     <a href="../index.php?article=<?php echo $i;?>">
-                      <?php echo file_get_contents($base . '/img/icon/' . "edit.svg"); ?>
+                      <?php echo file_get_contents(_BASE . '/img/icon/' . "edit.svg"); ?>
                     </a>
                   </td>
                 </tr>

@@ -19,9 +19,9 @@ include_once 'start.php';
         $image = $stmt->fetchColumn();
         foreach ($maxDim as $key => $val){
           if ($key == 'large') {
-            unlink('..' . $uploadDirectory . $image);
+            unlink('..' . _UPLOADDIRECTORY . $image);
           } else {
-            unlink('..' . $uploadDirectory . $key . '/' . $image);
+            unlink('..' . _UPLOADDIRECTORY . $key . '/' . $image);
           }
         }
         $stmt = $pdo->prepare('DELETE FROM `paragraph` WHERE `paragraph`.`id` = :id');
@@ -62,7 +62,7 @@ include '../template/header.php';
               <tr>
                 <td><input type="checkbox" name="images[]" value="<?php echo $image['id']; ?>"></td>
               <td>
-                <img src="<?php print '..' . $uploadDirectory . 'thumb/' . $image['paragraph']; ?>">
+                <img src="<?php print '..' . _UPLOADDIRECTORY . 'thumb/' . $image['paragraph']; ?>">
               </td>
               <td><?php print $image['paragraph'] ?></td>
               <td>

@@ -34,7 +34,7 @@ include_once 'start.php';
         $ratio = $width/$height;
         $new_width = ($width > 120) ? 120 : $width;
         $new_height = ($width > 120) ? 120/$ratio : $height;
-        $uploadPath = $currentDir . '/img/users/' . basename($fileName);
+        $uploadPath = _CURRENTDIR . '/img/users/' . basename($fileName);
         $dst = imagecreatetruecolor($new_width, $new_height);
         imagecopyresampled($dst, $src, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
         imagejpeg($dst, $uploadPath, 100);

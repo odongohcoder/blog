@@ -18,7 +18,7 @@ include_once '../array/sizes.php';
 // Init vars
 $admintitle = 'Admin';
 foreach ($adminmenu as $row){
-  if ($dir . '/' . $file == $row['link']) {
+  if (_DIR . '/' . _FILE == $row['link']) {
     $admintitle = $row['name'];
   }
 }

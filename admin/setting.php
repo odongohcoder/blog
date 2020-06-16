@@ -9,8 +9,8 @@ $settings = $stmt->fetchAll();
 $setting = [];
 ?>
 
-<!-- START COMMENT FORM-->
-<?php if (isset($_SESSION['email']) && $base):?>
+<?php if (isset($_SESSION['admin']) && _BASE):?>
+
 <div class="inner">
   <form action="setting-post.php" method="POST" enctype="multipart/form-data">
     <p><strong>Settings</strong></p>

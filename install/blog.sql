@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.7.29)
 # Datenbank: blog
-# Erstellt am: 2020-05-30 20:47:19 +0000
+# Erstellt am: 2020-06-17 20:39:56 +0000
 # ************************************************************
 
 
@@ -61,6 +61,18 @@ CREATE TABLE `paragraph` (
 
 
 
+# Export von Tabelle plugins
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `plugins`;
+
+CREATE TABLE `plugins` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
 # Export von Tabelle post
 # ------------------------------------------------------------
 
@@ -83,19 +95,6 @@ CREATE TABLE `post` (
 
 
 
-# Export von Tabelle service
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `service`;
-
-CREATE TABLE `service` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `service` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-
 # Export von Tabelle settings
 # ------------------------------------------------------------
 
@@ -105,7 +104,6 @@ CREATE TABLE `settings` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL DEFAULT '',
   `bool` tinyint(1) NOT NULL DEFAULT '0',
-  `value` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -135,6 +133,7 @@ CREATE TABLE `users` (
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `users_image` varchar(255) DEFAULT NULL,
+  `admin` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

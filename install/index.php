@@ -35,6 +35,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
   if(empty($server_err) && empty($name_err) && empty($username_err) && empty($password_err)){
 
     $data = "<?php\n";
+    $data .= "defined('_BASE') or die('Something went wrong');\n";
+    $data .= "\n";
     $data .= "define('DB_SERVER', '".$server."');\n";
     $data .= "define('DB_USERNAME', '".$username."');\n";
     $data .= "define('DB_PASSWORD', '".$password."');\n";

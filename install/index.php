@@ -6,6 +6,7 @@ include_once '../array/meta.php';
 // Include menu items
 include_once '../array/links.php';
 
+$subfolder = '';
 $server = $server_err = '';
 $name = $name_err = '';
 $username = $username_err = '';
@@ -14,10 +15,13 @@ $password = $password_err = '';
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
   $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
+  $subfolder = trim($_POST['subfolder']);
   $server = trim($_POST['server']);
   $name = trim($_POST['name']);
   $username = trim($_POST['username']);
   $password = trim($_POST['password']);
+
+  (empty($subfolder)) ? $subfolder = '/' : $subfolder = '/'.$subfolder.'/';
 
   if(empty($server)){
     $server_err = 'Please enter server';
@@ -34,15 +38,20 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
   if(empty($server_err) && empty($name_err) && empty($username_err) && empty($password_err)){
 
-    $data = "<?php\n";
-    $data .= "defined('_BASE') or die('Something went wrong');\n";
-    $data .= "\n";
-    $data .= "define('DB_SERVER', '".$server."');\n";
-    $data .= "define('DB_USERNAME', '".$username."');\n";
-    $data .= "define('DB_PASSWORD', '".$password."');\n";
-    $data .= "define('DB_NAME', '".$name."');\n\n";
-    $data .= file_get_contents('db.txt');
-    file_put_contents("../creds/db.php",$data) or die('ERROR:Can not write file');
+    $directory_data = "<?php\n";
+    $directory_data .= "define('_SUBFOLDER', '".$subfolder."');\n";
+    $directory_data .= file_get_contents('directory.txt');
+    file_put_contents('../array/database.php', $directory_data);
+
+    $db_data = "<?php\n";
+    $db_data .= "defined('_BASE') or die('Something went wrong');\n";
+    $db_data .= "\n";
+    $db_data .= "define('DB_SERVER', '".$server."');\n";
+    $db_data .= "define('DB_USERNAME', '".$username."');\n";
+    $db_data .= "define('DB_PASSWORD', '".$password."');\n";
+    $db_data .= "define('DB_NAME', '".$name."');\n\n";
+    $db_data .= file_get_contents('db.txt');
+    file_put_contents("../creds/db.php",$db_data) or die('ERROR:Can not write file');
 
     require_once '../creds/db.php';
 
@@ -74,6 +83,14 @@ include '../template/header.php';
 
     <div class="inner">
       <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" enctype="multipart/form-data">
+
+        <div class="form-group">
+          <label for="subfolder">Enter subfolder if blog isn't main domain; like <i>blog</i> or <i>myfolder/blog</i></label>
+          <input name="subfolder" type="text" value="localhost">
+          <?php if ($subfolder_err):?>
+            <span class="invalid-feedback"><?php print $subfolder_err; ?></span>
+          <?php endif; ?>
+        </div>
 
         <div class="form-group">
           <label for="server">Server</label>
@@ -108,9 +125,15 @@ include '../template/header.php';
         </div>
 
         <div class="form-row">
+          <?php if ($form_success):?>
+            <div class="col">
+              <a class="button next" href="../admin/register.php">Register</a>
+            </div>
+          <?php else: ?>
           <div class="col">
             <button name="Submit" type="submit" value="Install">Install</button>
           </div>
+          <?php endif; ?>
         </div>
 
       </form>

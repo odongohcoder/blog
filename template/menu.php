@@ -4,9 +4,9 @@
 		<li <?php if( $val['link'] == _DIR ):?>class="active"<?php endif;?>>
 			<a href="<?php echo _BASE; print $val['link']; ?>">
 				<?php if(!empty($_SESSION['users_image']) && $key == "admin"): ?>
-					<div class="users-image" style="background-image:url(<?php print _BASE . '/img/users/' . $_SESSION['users_image']; ?>)"></div>
+					<div class="users-image" style="background-image:url(<?php print _BASE . 'img/users/' . $_SESSION['users_image']; ?>)"></div>
 				<?php else: ?>
-					<?php echo file_get_contents(_BASE . '/img/icon/' . $val['icon']); ?>
+					<?php echo file_get_contents(_BASE . 'img/icon/' . $val['icon']); ?>
 				<?php endif; ?>
 			</a>
 		</li>

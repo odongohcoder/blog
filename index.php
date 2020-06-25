@@ -2,7 +2,7 @@
 // Init session
 session_start();
 // Include paths
-include_once 'array/directory.php';
+require_once 'array/directory.php';
 // Include db config
 require_once 'creds/db.php';
 // Settings
@@ -10,10 +10,11 @@ $sql = "SELECT `bool` FROM `settings`";
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
 $settings = $stmt->fetchAll();
-$private = $settings["0"];
+$private = '';
+(!$settings) ?: $private = $settings["0"]["bool"];
 
 // Check if blog is private
-if((!isset($_SESSION['email']) || empty($_SESSION['email'])) && $private["bool"] == '1'){
+if((!isset($_SESSION['email']) || empty($_SESSION['email'])) && $private == '1'){
   header('location: admin/');
   exit;
 }

@@ -1,4 +1,6 @@
 <?php
+// Init session
+session_start();
 // Include paths
 include_once '../array/directory.php';
 // Include db config
@@ -11,6 +13,9 @@ include_once '../array/links.php';
   // Init vars
   $name = $email = $password = $confirm_password = '';
   $name_err = $email_err = $password_err = $confirm_password_err = '';
+  $admin = isset($_SESSION["token"]) ? ((file_get_contents('../install/token.php') == $_SESSION["token"]) ? '1' : '0') : '0';
+  $admintitle = isset($_SESSION["token"]) ? 'Register administrator' : 'Register';
+
 
   // Process form when post submit
   if($_SERVER['REQUEST_METHOD'] === 'POST'){
@@ -27,16 +32,10 @@ include_once '../array/links.php';
     if(empty($email)){
       $email_err = 'Please enter email';
     } else {
-      // Prepare a select statement
       $sql = 'SELECT id FROM users WHERE email = :email';
-
       if($stmt = $pdo->prepare($sql)){
-        // Bind variables
         $stmt->bindParam(':email', $email, PDO::PARAM_STR);
-
-        // Attempt to execute
         if($stmt->execute()){
-          // Check if email exists
           if($stmt->rowCount() === 1){
             $email_err = 'Email is already taken';
           }
@@ -44,7 +43,6 @@ include_once '../array/links.php';
           die('Something went wrong');
         }
       }
-
       unset($stmt);
     }
 
@@ -75,13 +73,16 @@ include_once '../array/links.php';
       $password = password_hash($password, PASSWORD_DEFAULT);
 
       // Prepare insert query
-      $sql = 'INSERT INTO users (name, email, password) VALUES (:name, :email, :password)';
+      $sql = 'INSERT INTO `users` (`name`, `email`, `password`, `admin`) VALUES (:name, :email, :password, :admin)';
 
       if($stmt = $pdo->prepare($sql)){
+
+        print $admin;
         // Bind params
         $stmt->bindParam(':name', $name, PDO::PARAM_STR);
         $stmt->bindParam(':email', $email, PDO::PARAM_STR);
         $stmt->bindParam(':password', $password, PDO::PARAM_STR);
+        $stmt->bindParam(':admin', $admin, PDO::PARAM_BOOL);
 
         // Attempt to execute
         if($stmt->execute()){
@@ -91,11 +92,7 @@ include_once '../array/links.php';
           die('Something went wrong');
         }
       }
-      unset($stmt);
     }
-
-    // Close connection
-    unset($pdo);
   }
 
   include '../template/header.php';
@@ -105,7 +102,8 @@ include_once '../array/links.php';
     <div class="wrapper">
       <div class="inner">
 
-          <h1>Register</h1>
+          <h1><?php echo $admintitle; ?></h1>
+
           <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
             <div class="form-group">
               <label for="name">Name</label>

@@ -1,4 +1,6 @@
 <?php
+// Init session
+session_start();
 // Include paths
 include_once '../array/directory.php';
 // Include meta vars
@@ -11,6 +13,8 @@ $server = $server_err = '';
 $name = $name_err = '';
 $username = $username_err = '';
 $password = $password_err = '';
+$form_success = '';
+$admintitle = 'Install';
 
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
   $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
@@ -41,7 +45,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $directory_data = "<?php\n";
     $directory_data .= "define('_SUBFOLDER', '".$subfolder."');\n";
     $directory_data .= file_get_contents('directory.txt');
-    file_put_contents('../array/database.php', $directory_data);
+    file_put_contents('../array/directory.php',$directory_data) or die('ERROR:Can not write directory file');
 
     $db_data = "<?php\n";
     $db_data .= "defined('_BASE') or die('Something went wrong');\n";
@@ -51,7 +55,12 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $db_data .= "define('DB_PASSWORD', '".$password."');\n";
     $db_data .= "define('DB_NAME', '".$name."');\n\n";
     $db_data .= file_get_contents('db.txt');
-    file_put_contents("../creds/db.php",$db_data) or die('ERROR:Can not write file');
+    file_put_contents("../creds/db.php",$db_data) or die('ERROR:Can not write db file');
+
+    $_SESSION["token"] = 'token1234';
+    $token_data = "<?php\n";
+    $token_data .= "define('_TOKEN', '".$_SESSION["token"]."');\n";
+    file_put_contents("token.php",$_SESSION['token']) or die('ERROR:Can not write token file');
 
     require_once '../creds/db.php';
 
@@ -60,11 +69,11 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
       $stmt = $pdo->prepare("SET foreign_key_checks=0");
       $stmt->execute();
       $sql = file_get_contents("blog.sql");
-      $stmt = $pdo->prepare($sql);
       $stmt->execute();
       $stmt = $pdo->prepare("SET foreign_key_checks=1");
       if($stmt->execute()){
         $admintitle = "Install successful";
+        $form_success = true;
       } else {
         die('Something went wrong');
       }
@@ -79,17 +88,14 @@ include '../template/header.php';
 <div class="container">
   <div class="inner">
 
-    <h1>Install</h1>
+    <h1><?php echo $admintitle; ?></h1>
 
     <div class="inner">
       <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" enctype="multipart/form-data">
 
         <div class="form-group">
-          <label for="subfolder">Enter subfolder if blog isn't main domain; like <i>blog</i> or <i>myfolder/blog</i></label>
-          <input name="subfolder" type="text" value="localhost">
-          <?php if ($subfolder_err):?>
-            <span class="invalid-feedback"><?php print $subfolder_err; ?></span>
-          <?php endif; ?>
+          <label for="subfolder">Enter subfolder(s) if blog isn't main domain; like <i>blog</i> or <i>myfolder/blog</i></label>
+          <input name="subfolder" type="text" value="">
         </div>
 
         <div class="form-group">
@@ -127,7 +133,7 @@ include '../template/header.php';
         <div class="form-row">
           <?php if ($form_success):?>
             <div class="col">
-              <a class="button next" href="../admin/register.php">Register</a>
+              <a class="button next" href="../admin/register.php?admin=<?php print $token; ?>">Register</a>
             </div>
           <?php else: ?>
           <div class="col">

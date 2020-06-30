@@ -150,7 +150,7 @@ include '../template/header.php';
 
         <h1><?php echo $admintitle; ?></h1>
 
-          <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" enctype="multipart/form-data">
+          <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" enctype="multipart/form-data" novalidate>
             <div id="AddPost">
 
               <div class="form-group">

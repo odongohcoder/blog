@@ -45,7 +45,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $directory_data = "<?php\n";
     $directory_data .= "define('_SUBFOLDER', '".$subfolder."');\n";
     $directory_data .= file_get_contents('directory.txt');
-    file_put_contents('../array/directory.php',$directory_data) or die('ERROR:Can not write directory file');
+    file_put_contents('../array/directory.php',$directory_data) or die('ERROR: Can not write directory file');
 
     $db_data = "<?php\n";
     $db_data .= "defined('_BASE') or die('Something went wrong');\n";
@@ -55,12 +55,12 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $db_data .= "define('DB_PASSWORD', '".$password."');\n";
     $db_data .= "define('DB_NAME', '".$name."');\n\n";
     $db_data .= file_get_contents('db.txt');
-    file_put_contents("../creds/db.php",$db_data) or die('ERROR:Can not write db file');
+    file_put_contents("../creds/db.php",$db_data) or die('ERROR: Can not write db file');
 
-    $_SESSION["token"] = 'token1234';
+    $_SESSION["token"] = bin2hex(random_bytes(16));
     $token_data = "<?php\n";
     $token_data .= "define('_TOKEN', '".$_SESSION["token"]."');\n";
-    file_put_contents("token.php",$_SESSION['token']) or die('ERROR:Can not write token file');
+    file_put_contents("token.php",$_SESSION['token']) or die('ERROR: Can not write token file');
 
     require_once '../creds/db.php';
 
@@ -91,6 +91,13 @@ include '../template/header.php';
     <h1><?php echo $admintitle; ?></h1>
 
     <div class="inner">
+
+      <?php if ($form_success):?>
+        <div class="col">
+          <a class="button next" href="../admin/register.php?admin=<?php print $_SESSION["token"]; ?>">Register</a>
+        </div>
+      <?php else: ?>
+
       <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" enctype="multipart/form-data">
 
         <div class="form-group">
@@ -131,18 +138,13 @@ include '../template/header.php';
         </div>
 
         <div class="form-row">
-          <?php if ($form_success):?>
-            <div class="col">
-              <a class="button next" href="../admin/register.php?admin=<?php print $token; ?>">Register</a>
-            </div>
-          <?php else: ?>
           <div class="col">
             <button name="Submit" type="submit" value="Install">Install</button>
           </div>
-          <?php endif; ?>
         </div>
 
       </form>
+      <?php endif; ?>
     </div>
 
   </div>

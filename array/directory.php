@@ -1,6 +1,5 @@
 <?php
-// subfolder on top of $_SERVER['SERVER_NAME']
-define('_SUBFOLDER', "/");
+define('_SUBFOLDER', '/');
 // protocol http or https
 define('_PROTOCOL', isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 'https' : 'http');
 // base url of blog
@@ -16,4 +15,3 @@ define('_UPLOADDIRECTORY', "/img/article/");
 // Parameter to variable
 !isset($_GET["subject"]) ?: $subject_id = intval($_GET["subject"]);
 !isset($_GET["article"]) ?: $article_id = intval($_GET["article"]);
-?>

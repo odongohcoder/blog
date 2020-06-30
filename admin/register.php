@@ -16,7 +16,6 @@ include_once '../array/links.php';
   $admin = isset($_SESSION["token"]) ? ((file_get_contents('../install/token.php') == $_SESSION["token"]) ? '1' : '0') : '0';
   $admintitle = isset($_SESSION["token"]) ? 'Register administrator' : 'Register';
 
-
   // Process form when post submit
   if($_SERVER['REQUEST_METHOD'] === 'POST'){
     // Sanitize POST

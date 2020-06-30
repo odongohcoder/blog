@@ -50,6 +50,8 @@ else:
 endif;
 $total = $stmt->rowCount();
 
+$author = isset($_SESSION['id']) ? (($result[0]['id'] == $_SESSION['id']) ? true : false) : false;
+
 // Include meta vars
 include_once 'array/meta.php';
 // Frontend META_TITLE
@@ -98,7 +100,7 @@ include 'template/header.php';
               <?php elseif($row['item'] == 'txt'):?>
 								<div class="outer">
                 	<div class="inner">
-                    <p><?php print $row['paragraph']; ?></p>
+                    <p <?php (!$author) ?: print 'contenteditable';?>><?php print $row['paragraph']; ?></p>
                     <?php ($row['caption']) ? print '<small>' . $row['caption'] . '</small>': ''; ?>
                 	</div>
 								</div>

@@ -50,7 +50,7 @@ else:
 endif;
 $total = $stmt->rowCount();
 
-$author = isset($_SESSION['id']) ? (($result[0]['id'] == $_SESSION['id']) ? true : false) : false;
+$author = isset($_SESSION['id']) && $result ? (($result[0]['id'] == $_SESSION['id']) ? true : false) : false;
 
 // Include meta vars
 include_once 'array/meta.php';
@@ -111,7 +111,9 @@ include 'template/header.php';
                       <source src="<?php print $row['paragraph']; ?>" type="audio/mpeg">
                       Your browser does not support the audio tag.
                     </audio>
-                    <?php ($row['caption']) ? print '<small>' . $row['caption'] . '</small>': ''; ?>
+                    <small>
+                      <?php ($row['caption']) ? print $row['caption'] : print $row['paragraph']; ?>
+                    </small>
                   </div>
                 </div>
               <?php endif; ?>

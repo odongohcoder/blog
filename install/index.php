@@ -58,19 +58,19 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     file_put_contents("../creds/db.php",$db_data) or die('ERROR: Can not write db file');
 
     $_SESSION["token"] = bin2hex(random_bytes(16));
-    $token_data = "<?php\n";
-    $token_data .= "define('_TOKEN', '".$_SESSION["token"]."');\n";
-    file_put_contents("token.php",$_SESSION['token']) or die('ERROR: Can not write token file');
 
     require_once '../creds/db.php';
 
     if($pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, 1)){
-
       $stmt = $pdo->prepare("SET foreign_key_checks=0");
       $stmt->execute();
-      $sql = file_get_contents("blog.sql");
+      $stmt = $pdo->prepare(file_get_contents("blog.sql"));
       $stmt->execute();
       $stmt = $pdo->prepare("SET foreign_key_checks=1");
+      $stmt->execute();
+      $sql = "UPDATE `token` SET `token`= :token";
+      $stmt = $pdo->prepare($sql);
+      $stmt->bindParam(':token', $_SESSION["token"], PDO::PARAM_STR);
       if($stmt->execute()){
         $admintitle = "Install successful";
         $form_success = true;

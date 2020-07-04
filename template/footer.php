@@ -20,16 +20,18 @@
 	  </script>
 		<script src="https://cdn.jsdelivr.net/npm/macy@2"></script>
 		<script>
-		var macy = Macy({
-			container: '#grid',
-			trueOrder: false,
-			waitForImages: false,
-			columns: 3,
-			breakAt: {
-				768: 2,
-        480: 1
-			}
-		});
+		if (document.getElementById("grid")) {
+			var macy = Macy({
+				container: '#grid',
+				trueOrder: false,
+				waitForImages: false,
+				columns: 3,
+				breakAt: {
+					768: 2,
+	        480: 1
+				}
+			});	
+		}
 	  </script>
 		<script>
 		document.addEventListener('DOMContentLoaded', function () {
@@ -40,7 +42,7 @@
 			});
 		});
 		</script>
-		
+
 	  <?php
 	  unset($stmt);
 	  unset($pdo);

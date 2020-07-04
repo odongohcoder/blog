@@ -68,7 +68,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
       $stmt->execute();
       $stmt = $pdo->prepare("SET foreign_key_checks=1");
       $stmt->execute();
-      $sql = "UPDATE `token` SET `token`= :token";
+      $sql = "UPDATE `settings` SET `token`= :token WHERE `id` = '1'";
       $stmt = $pdo->prepare($sql);
       $stmt->bindParam(':token', $_SESSION["token"], PDO::PARAM_STR);
       if($stmt->execute()){

@@ -10,10 +10,15 @@ include_once '../array/meta.php';
 // Include menu items
 include_once '../array/links.php';
 
+if (isset($_SESSION["token"])) {
+  $stmt = $pdo->prepare("SELECT `token` FROM `settings` WHERE `id` = '1'");
+  $stmt->execute();
+  $token = $stmt->fetchAll();
+}
   // Init vars
   $name = $email = $password = $confirm_password = '';
   $name_err = $email_err = $password_err = $confirm_password_err = '';
-  $admin = isset($_SESSION["token"]) ? ((file_get_contents('../install/token.php') == $_SESSION["token"]) ? '1' : '0') : '0';
+  $admin = isset($_SESSION["token"]) ? ($token[0]["token"] == $_SESSION["token"] ? '1' : '0') : '0';
   $admintitle = isset($_SESSION["token"]) ? 'Register administrator' : 'Register';
 
   // Process form when post submit

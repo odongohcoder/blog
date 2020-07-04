@@ -1,16 +1,3 @@
-# ************************************************************
-# Sequel Pro SQL dump
-# Version 4541
-#
-# http://www.sequelpro.com/
-# https://github.com/sequelpro/sequelpro
-#
-# Host: 127.0.0.1 (MySQL 5.7.29)
-# Datenbank: blog
-# Erstellt am: 2020-07-02 18:45:53 +0000
-# ************************************************************
-
-
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
@@ -104,15 +91,17 @@ CREATE TABLE `settings` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL DEFAULT '',
   `bool` tinyint(1) NOT NULL DEFAULT '0',
+  `value` varchar(255) DEFAULT NULL,
+  `token` varchar(32) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `settings` WRITE;
 /*!40000 ALTER TABLE `settings` DISABLE KEYS */;
 
-INSERT INTO `settings` (`id`, `name`, `bool`)
+INSERT INTO `settings` (`id`, `name`, `bool`, `value`, `token`)
 VALUES
-	(1,'Private',0);
+	(1,'Private',0,NULL,'');
 
 /*!40000 ALTER TABLE `settings` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -129,26 +118,6 @@ CREATE TABLE `subject` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-
-
-# Export von Tabelle token
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `token`;
-
-CREATE TABLE `token` (
-  `token` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-LOCK TABLES `token` WRITE;
-/*!40000 ALTER TABLE `token` DISABLE KEYS */;
-
-INSERT INTO `token` (`token`)
-VALUES
-	(NULL);
-
-/*!40000 ALTER TABLE `token` ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 # Export von Tabelle users

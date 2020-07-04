@@ -154,7 +154,7 @@ include '../template/header.php';
             <div id="AddPost">
 
               <div class="form-group">
-                <label for="subject">Subject</label>
+                <label for="subject">Category</label>
                 <div class="select-container">
                   <span class="select-arrow fa fa-chevron-down"></span>
                   <select name="subject">

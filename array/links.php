@@ -39,7 +39,7 @@ $adminmenu = [
   ],
   'settings' => [
     'name' => 'Settings',
-    'link' => 'admin/',
+    'link' => 'admin/settings.php',
     'icon' => 'sliders.svg'
   ]
 ];

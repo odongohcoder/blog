@@ -1,4 +1,10 @@
 <?php
+include_once 'start.php';
+
+if (!isset($_SESSION['admin']) && _BASE){
+  header('location: ../admin/');
+}
+
 $sql = "
 SELECT * FROM `settings`
 ";
@@ -7,13 +13,16 @@ $stmt->execute();
 $settings = $stmt->fetchAll();
 
 $setting = [];
+
+// Include head
+include '../template/' . $template . '/header.php';
 ?>
 
-<?php if (isset($_SESSION['admin']) && _BASE):?>
+<div class="container">
+  <div class="inner">
 
-<div class="inner">
-  <form action="setting-post.php" method="POST" enctype="multipart/form-data">
-    <p><strong>Settings</strong></p>
+    <h1><?php echo $admintitle; ?></h1>
+    <form action="setting-post.php" method="POST" enctype="multipart/form-data">
       <table>
         <?php foreach($settings as $row):?>
           <tr>
@@ -32,8 +41,10 @@ $setting = [];
           <button type="submit" value="Update">Update</button>
         </div>
       </div>
-    </div>
-  </form>
+    </form>
+  </div>
 </div>
 
-<?php endif; ?>
+<?php
+include '../template/' . $template . '/footer.php';
+?>

@@ -3,6 +3,8 @@
 session_start();
 // Include paths
 include_once '../array/directory.php';
+// Template
+$template = 'jane';
 // Include meta vars
 include_once '../array/meta.php';
 // Include menu items

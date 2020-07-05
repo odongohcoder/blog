@@ -10,6 +10,8 @@ if(!isset($_SESSION['email']) || empty($_SESSION['email'])){
 include_once '../array/directory.php';
 // Include db config
 require_once '../creds/db.php';
+// Include settings
+require_once '../array/template.php';
 // Include menu items
 include_once '../array/links.php';
 // Include image sizes

@@ -120,6 +120,30 @@ CREATE TABLE `subject` (
 
 
 
+# Export von Tabelle template
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `template`;
+
+CREATE TABLE `template` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL DEFAULT '',
+  `url` varchar(255) NOT NULL DEFAULT '',
+  `bool` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+LOCK TABLES `template` WRITE;
+/*!40000 ALTER TABLE `template` DISABLE KEYS */;
+
+INSERT INTO `template` (`id`, `name`, `url`, `bool`)
+VALUES
+	(1,'Jane','jane',1);
+
+/*!40000 ALTER TABLE `template` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
 # Export von Tabelle users
 # ------------------------------------------------------------
 

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+  <template>
+    <name>Jane</name>
+    <url>jane</url>
+    <version>1.0.0</version>
+    <image></image>
+    <description>Simple and clean</description>
+  </template>
+</templates>

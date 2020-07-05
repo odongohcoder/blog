@@ -5,15 +5,15 @@ session_start();
 require_once 'array/directory.php';
 // Include db config
 require_once 'creds/db.php';
-// Settings
-$sql = "SELECT `bool` FROM `settings`";
-$stmt = $pdo->prepare($sql);
-$stmt->execute();
-$settings = $stmt->fetchAll();
-$private = '';
-(!$settings) ?: $private = $settings["0"]["bool"];
+// Include settings
+require_once 'array/template.php';
 
 // Check if blog is private
+$sql = "SELECT `bool` FROM `settings` WHERE `name` = 'Private'";
+$stmt = $pdo->prepare($sql);
+$stmt->execute();
+$private = $stmt->fetchColumn();
+
 if((!isset($_SESSION['email']) || empty($_SESSION['email'])) && $private == '1'){
   header('location: admin/');
   exit;

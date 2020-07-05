@@ -12,8 +12,6 @@ define('_FILE', basename($_SERVER['SCRIPT_FILENAME']));
 define('_CURRENTDIR', $_SERVER['DOCUMENT_ROOT'] . _SUBFOLDER);
 // main upload folder images
 define('_UPLOADDIRECTORY', "/img/article/");
-// template
-$template = 'jane';
 // parameter to variable
 !isset($_GET["subject"]) ?: $subject_id = intval($_GET["subject"]);
 !isset($_GET["article"]) ?: $article_id = intval($_GET["article"]);

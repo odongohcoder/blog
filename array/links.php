@@ -36,6 +36,11 @@ $adminmenu = [
     'name' => 'Images',
     'link' => 'admin/images.php',
     'icon' => 'image.svg'
+  ],
+  'settings' => [
+    'name' => 'Settings',
+    'link' => 'admin/',
+    'icon' => 'sliders.svg'
   ]
 ];
 ?>

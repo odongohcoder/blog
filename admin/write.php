@@ -156,13 +156,16 @@ include '../template/' . $template . '/header.php';
               <div class="form-group">
                 <label for="subject">Category</label>
                 <div class="select-container">
-                  <span class="select-arrow fa fa-chevron-down"></span>
+                  <span class="select-arrow"></span>
                   <select name="subject">
                     <?php foreach($subjectList as $row):?>
                       <option value="<?php echo $row["id"]; ?>" <?php echo ($row["id"] == $subject_id) ? 'selected="selected"' : ''; ?>><?php echo $row["subject"]; ?></option>
                     <?php endforeach;?>
                   </select>
                 </div>
+                <?php if (!$subjectList):?>
+                  <span class="invalid-feedback">Create category first</span>
+                <?php endif; ?>
               </div>
 
             <div class="form-group">

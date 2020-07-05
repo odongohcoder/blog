@@ -57,7 +57,7 @@ include_once 'array/meta.php';
 // Frontend META_TITLE
 isset($_GET["article"]) ?: $meta["META_TITLE"] = 'Sincerity';
 // Include head
-include 'template/header.php';
+include 'template/' . $template . '/header.php';
 ?>
 
     <!-- START CONTAINER -->
@@ -178,7 +178,7 @@ include 'template/header.php';
     <?php else:?>
 
     <?php
-    include 'template/error.php';
+    include 'template/' . $template . '/error.php';
     ?>
 
     <?php endif;?>
@@ -186,5 +186,5 @@ include 'template/header.php';
     <!-- END CONTAINER -->
 
   <?php
-  include 'template/footer.php';
+  include 'template/' . $template . '/footer.php';
   ?>

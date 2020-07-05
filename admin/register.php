@@ -99,7 +99,7 @@ if (isset($_SESSION["token"])) {
     }
   }
 
-  include '../template/header.php';
+  include '../template/' . $template . '/header.php';
 ?>
 
   <div class="container">
@@ -153,5 +153,5 @@ if (isset($_SESSION["token"])) {
   </div>
 
   <?php
-  include '../template/footer.php';
+  include '../template/' . $template . '/footer.php';
   ?>

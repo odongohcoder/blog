@@ -59,7 +59,7 @@ include_once 'start.php';
   $subjectList = $stmt->fetchAll();
 
   // Include head
-  include '../template/header.php';
+  include '../template/' . $template . '/header.php';
 ?>
 
   <div class="container">
@@ -99,5 +99,5 @@ include_once 'start.php';
     </div>
 
   <?php
-  include '../template/footer.php';
+  include '../template/' . $template . '/footer.php';
   ?>

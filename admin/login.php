@@ -76,7 +76,7 @@ include_once '../array/links.php';
   }
 
 // Include head
-include '../template/header.php';
+include '../template/' . $template . '/header.php';
 ?>
 
   <div class="container first">
@@ -116,5 +116,5 @@ include '../template/header.php';
     </div>
 
   <?php
-  include '../template/footer.php';
+  include '../template/' . $template . '/footer.php';
   ?>

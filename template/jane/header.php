@@ -54,8 +54,8 @@
 
 		<title><?php echo $meta["META_TITLE"]; ?></title>
 
-		<link href="<?php echo _BASE;?>template/css/normalize.css" rel="stylesheet">
-		<link href="<?php echo _BASE;?>template/css/style.css" rel="stylesheet">
+		<link href="<?php echo _BASE;?>template/<?php echo $template;?>/css/normalize.css" rel="stylesheet">
+		<link href="<?php echo _BASE;?>template/<?php echo $template;?>/css/style.css" rel="stylesheet">
 
 	</head>
 

@@ -1,6 +1,8 @@
 # Blog
 Simple blogging system coming up
 
+Download: https://github.com/joepdooper/blog/archive/development.zip
+
 ## Setup
 1. Create database.
 2. Download files into your blog folder. *Example https://yourwebsite.com/blog*

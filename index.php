@@ -56,7 +56,7 @@ $author = isset($_SESSION['id']) && $result ? (($result[0]['id'] == $_SESSION['i
 include_once 'array/meta.php';
 // Frontend META_TITLE
 isset($_GET["article"]) ?: $meta["META_TITLE"] = 'Sincerity';
-// Include head
+// Include html
 include 'template/' . $template . '/header.php';
 include 'template/' . $template . '/main.php';
 include 'template/' . $template . '/footer.php';

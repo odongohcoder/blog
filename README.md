@@ -16,3 +16,6 @@ Download: https://github.com/joepdooper/blog/archive/development.zip
 - E-mail notification on post
 - Install and register as steps
 - Write post as steps
+- Easy to update system
+- Plugin environment
+- Simplify code with functions and classes

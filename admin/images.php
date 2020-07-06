@@ -48,6 +48,7 @@ include '../template/' . $template . '/header.php';
 ?>
 
     <div class="container">
+      <?php if ($images):?>
         <div class="inner">
           <h1><?php echo $admintitle; ?></h1>
 
@@ -78,6 +79,11 @@ include '../template/' . $template . '/header.php';
           </form>
 
         </div>
+      <?php else: ?>
+        <?php
+        include '../template/' . $template . '/error.php';
+        ?>
+      <?php endif; ?>
     </div>
 
   <?php

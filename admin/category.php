@@ -78,6 +78,7 @@ include_once 'start.php';
 
             <button type="submit" value="Update">Add</button>
 
+            <?php if ($subjectList):?>
             <table style="width:100%">
               <?php foreach($subjectList as $row):?>
               <tr>
@@ -92,6 +93,7 @@ include_once 'start.php';
             </table>
 
             <button type="submit" value="Update">Delete</button>
+            <?php endif; ?>
 
           </form>
 

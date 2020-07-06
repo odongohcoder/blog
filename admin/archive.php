@@ -94,9 +94,10 @@ include '../template/' . $template . '/header.php';
         </div>
 
       <?php else:?>
-        <?php
-        include '../template/' . $template . '/error.php';
-        ?>
+
+      <?php
+      include '../template/' . $template . '/error.php';
+      ?>
 
       <?php endif;?>
     </div>

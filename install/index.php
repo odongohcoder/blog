@@ -134,7 +134,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
       <?php if ($form_success):?>
         <div class="col">
-          <a class="button next" href="../admin/register.php?admin=<?php print $_SESSION["token"]; ?>">Register</a>
+          <a class="button next" href="../admin/register.php?admin=<?php print $_SESSION["token"]; ?>">Now register administrator</a>
         </div>
       <?php else: ?>
 

@@ -414,6 +414,9 @@ a.subject,
 }
 
 /* FORMULAR */
+form table {
+  width:100%;
+}
 
 form input,
 form textarea {

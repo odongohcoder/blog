@@ -82,10 +82,48 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     }
   }
 }
-
-// Include head
-include '../template/' . $template . '/header.php';
 ?>
+<!doctype html>
+<html lang="nl">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="apple-mobile-web-app-title" content="<?php echo $meta["META_TITLE"]; ?>">
+		<meta name="theme-color" content="#ffffff">
+		<meta name="description" content="<?php echo $meta["META_DESCRIPTION"]; ?>">
+		<meta name="keywords" content="<?php echo $meta["META_KEYWORDS"]; ?>">
+		<meta name="author" content="<?php echo $meta["AUTHOR"]; ?>">
+		<meta name="content_origin"  content="<?php echo $meta["DATE"]; ?>">
+		<meta name="robots" content="index, no-follow">
+		<meta name="revisit-after" content="3 days">
+		<title><?php echo $meta["META_TITLE"]; ?></title>
+		<link href="<?php echo _BASE;?>template/<?php echo $template;?>/css/normalize.css" rel="stylesheet">
+		<link href="<?php echo _BASE;?>template/<?php echo $template;?>/css/style.css" rel="stylesheet">
+	</head>
+
+	<body>
+		<input id="dark-mode" name="dark-mode" class="dark-mode-checkbox visually-hidden" type="checkbox">
+		<div class="wrapper theme-container">
+			<header id="header">
+					<?php if (isset($_GET["article"])):?>
+						<a href="index.php" class="return">
+							<?php echo file_get_contents(_BASE . '/img/icon/' . "arrow-left.svg"); ?>
+						</a>
+					<?php endif;?>
+					<div class="logo">
+						<a id="logo" href="<?php echo _BASE;?>">
+							Sincerity&reg;
+						</a>
+					</div>
+					<label class="dark-mode-label switch" for="dark-mode">
+						<?php echo file_get_contents(_BASE . '/img/icon/' . "sun.svg"); ?><?php echo file_get_contents(_BASE . '/img/icon/' . "moon.svg"); ?>
+					</label>
+					<nav class="menu" id="main">
+						<?php include 'menu.php'; ?>
+					</nav>
+			</header>
 
 <div class="container">
   <div class="inner">
@@ -152,6 +190,10 @@ include '../template/' . $template . '/header.php';
   </div>
 </div>
 
+</div>
 <?php
-include '../template/' . $template . '/footer.php';
+unset($stmt);
+unset($pdo);
 ?>
+</body>
+</html>

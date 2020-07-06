@@ -1,3 +1,9 @@
+<?php
+if (!defined('_BASE')){
+  header('location: ../../index.php');
+}
+?>
+
 </div>
 
 		<footer>
@@ -30,7 +36,7 @@
 					768: 2,
 	        480: 1
 				}
-			});	
+			});
 		}
 	  </script>
 		<script>

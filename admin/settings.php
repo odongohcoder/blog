@@ -1,7 +1,7 @@
 <?php
 include_once 'start.php';
 
-if (!isset($_SESSION['admin']) && _BASE){
+if (!isset($_SESSION['admin']) && !defined('_BASE')){
   header('location: ../admin/');
 }
 

@@ -1,3 +1,7 @@
+<?php
+defined('_BASE') or die('Something went wrong');
+?>
+
 <ul>
 	<?php foreach($pages as $key=>$val):?>
 		<?php if(isset($_SESSION['email']) || $key == "admin"): ?>

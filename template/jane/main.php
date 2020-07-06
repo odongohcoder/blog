@@ -1,3 +1,9 @@
+<?php
+if (!defined('_BASE')){
+  header('location: ../../index.php');
+}
+?>
+
 <!-- START CONTAINER -->
 <div class="container">
 

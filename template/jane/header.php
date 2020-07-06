@@ -1,3 +1,9 @@
+<?php
+if (!defined('_BASE')){
+  header('location: ../../index.php');
+}
+?>
+
 <!doctype html>
 <html lang="nl">
 	<head>

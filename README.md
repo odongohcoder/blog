@@ -18,4 +18,4 @@ Download: https://github.com/joepdooper/blog/archive/development.zip
 - Write post as steps
 - Easy to update system
 - Plugin environment
-- Simplify code with functions and classes
+- Slimmer code with functions and classes

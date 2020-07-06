@@ -99,8 +99,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 		<meta name="robots" content="index, no-follow">
 		<meta name="revisit-after" content="3 days">
 		<title><?php echo $meta["META_TITLE"]; ?></title>
-		<link href="<?php echo _BASE;?>template/<?php echo $template;?>/css/normalize.css" rel="stylesheet">
-		<link href="<?php echo _BASE;?>template/<?php echo $template;?>/css/style.css" rel="stylesheet">
+		<link href="../template/<?php echo $template;?>/css/normalize.css" rel="stylesheet">
+		<link href="../template/<?php echo $template;?>/css/style.css" rel="stylesheet">
 	</head>
 
 	<body>
@@ -191,6 +191,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 </div>
 
 </div>
+<footer></footer>
 <?php
 unset($stmt);
 unset($pdo);

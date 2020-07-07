@@ -14,8 +14,8 @@ Download: https://github.com/joepdooper/blog/archive/development.zip
 - Set single post to private
 - Install/uninstall different templates
 - E-mail notification on post
-- Install and register as steps
-- Write post as steps
+- Install and register in steps
+- Write post in steps
 - Easy to update system
 - Plugin environment
 - Slimmer code with functions and classes

@@ -19,3 +19,4 @@ Download: https://github.com/joepdooper/blog/archive/development.zip
 - Easy to update system
 - Plugin environment
 - Slimmer code with functions and classes
+- Versioning

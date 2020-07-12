@@ -76,10 +76,18 @@ include_once '../array/links.php';
       }
     }
   }
-
-// Include head
-include '../template/' . $template . '/header.php';
 ?>
+
+<!doctype html>
+<html lang="nl">
+<?php include '../template/' . $template . '/head.php'; ?>
+<body>
+  <input id="dark-mode" name="dark-mode" class="dark-mode-checkbox visually-hidden" type="checkbox">
+  <!-- Start wrapper -->
+  <div class="wrapper theme-container">
+    <?php
+    include '../template/' . $template . '/header.php';
+    ?>
 
   <div class="container first">
     <div class="wrapper">
@@ -117,6 +125,16 @@ include '../template/' . $template . '/header.php';
       </div>
     </div>
 
-  <?php
-  include '../template/' . $template . '/footer.php';
-  ?>
+  </div>
+  <!-- End wrapper -->
+
+    <?php
+    include '../template/' . $template . '/footer.php';
+    ?>
+
+    <?php
+    unset($stmt);
+    unset($pdo);
+    ?>
+  </body>
+  </html>

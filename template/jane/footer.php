@@ -4,8 +4,6 @@ if (!defined('_BASE')){
 }
 ?>
 
-</div>
-
 		<footer>
 			<?php if(isset($_SESSION['email'])): ?>
 			<nav class="menu" id="admin">
@@ -48,10 +46,3 @@ if (!defined('_BASE')){
 			});
 		});
 		</script>
-
-	  <?php
-	  unset($stmt);
-	  unset($pdo);
-	  ?>
-	  </body>
-	</html>

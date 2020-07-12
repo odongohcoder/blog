@@ -56,8 +56,25 @@ $author = isset($_SESSION['id']) && $result ? (($result[0]['id'] == $_SESSION['i
 include_once 'array/meta.php';
 // Frontend META_TITLE
 isset($_GET["article"]) ?: $meta["META_TITLE"] = 'Sincerity';
-// Include html
-include 'template/' . $template . '/header.php';
-include 'template/' . $template . '/main.php';
-include 'template/' . $template . '/footer.php';
 ?>
+
+<!doctype html>
+<html lang="nl">
+<?php include 'template/' . $template . '/head.php'; ?>
+<body>
+  <input id="dark-mode" name="dark-mode" class="dark-mode-checkbox visually-hidden" type="checkbox">
+  <!-- Start wrapper -->
+  <div class="wrapper theme-container">
+    <?php
+    include 'template/' . $template . '/header.php';
+    include 'template/' . $template . '/main.php';
+    ?>
+  </div>
+  <!-- End wrapper -->
+  <?php include 'template/' . $template . '/footer.php'; ?>
+  <?php
+  unset($stmt);
+  unset($pdo);
+  ?>
+</body>
+</html>

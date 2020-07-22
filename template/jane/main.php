@@ -67,7 +67,7 @@ if (!defined('_BASE')){
 
 		<?php include 'admin/comment.php';?>
 
-	<?php elseif($total > 0):?>
+	<?php elseif(!empty($result)):?>
 		<div id="grid">
 	<?php foreach($result as $i => $row):?>
 		<div class="item-blog">

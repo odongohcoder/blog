@@ -1,7 +1,6 @@
 <?php
 // Template
 $sql = "SELECT `url` FROM `template` WHERE `bool` = '1'";
-$stmt = $pdo->prepare($sql);
-$stmt->execute();
-$template = $stmt->fetchColumn();
+$result = Read_DB($pdo,$sql,null);
+$template = $result['0']['url'];
 ?>

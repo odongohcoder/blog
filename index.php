@@ -5,16 +5,17 @@ session_start();
 require_once 'array/directory.php';
 // Include db config
 require_once 'creds/db.php';
+// Include db config
+require_once 'admin/functions.php';
 // Include settings
 require_once 'array/template.php';
 
 // Check if blog is private
-$sql = "SELECT `bool` FROM `settings` WHERE `name` = 'Private'";
-$stmt = $pdo->prepare($sql);
-$stmt->execute();
-$private = $stmt->fetchColumn();
+$sql = "SELECT `bool` FROM `settings` WHERE `name` = :private";
+$param = [':private'=>['Private',PDO::PARAM_INT]];
+$private = Read_DB($pdo,$sql,$param);
 
-if((!isset($_SESSION['email']) || empty($_SESSION['email'])) && $private == '1'){
+if((!isset($_SESSION['email']) || empty($_SESSION['email'])) && $private[0]['bool'] == '1'){
   header('location: admin/');
   exit;
 }
@@ -27,12 +28,10 @@ if (isset($_GET["article"])):
   SELECT `post`.`id`, `post`.`date`, `post`.`userid`, `post`.`title`, `post`.`subtitle`, `subject`.`id`, `subject`.`subject`, `users`.`id`, `users`.`name`, `users`.`users_image` FROM `post`
   INNER JOIN `subject` ON `subject`.`id` = `post`.`subject`
   INNER JOIN `users` ON `users`.`id` = `post`.`userid`
-  WHERE `post`.`id` = :article_id;
+  WHERE `post`.`id` = :article_id
   ";
-  $stmt = $pdo->prepare($sql);
-  $stmt->bindParam(':article_id', $article_id, PDO::PARAM_INT);
-  $stmt->execute();
-  $result = $stmt->fetchAll();
+  $param = [':article_id'=>[$article_id,PDO::PARAM_INT]];
+  $result = Read_DB($pdo,$sql,$param);
 else:
   $sql = "
   SELECT `post`.`id`, `post`.`date`, `post`.`userid`, `post`.`title`, `post`.`subtitle`, `subject`.`id`, `subject`.`subject`, `users`.`id`, `users`.`name`, `users`.`users_image` FROM `post`
@@ -41,20 +40,19 @@ else:
   ";
   if (isset($_GET["subject"])):
     $sql .= " WHERE `subject`.`id` = :subject_id";
+    $param = [':subject_id'=>[$subject_id,PDO::PARAM_INT]];
+  else:
+    $param = null;
   endif;
   $sql .= " ORDER BY `post`.`id` DESC";
-  $stmt = $pdo->prepare($sql);
-  $stmt->bindParam(':subject_id', $subject_id, PDO::PARAM_INT);
-  $stmt->execute();
-  $result = $stmt->fetchAll();
+  $result = Read_DB($pdo,$sql,$param);
 endif;
-$total = $stmt->rowCount();
 
 $author = isset($_SESSION['id']) && $result ? (($result[0]['id'] == $_SESSION['id']) ? true : false) : false;
 
 // Include meta vars
 include_once 'array/meta.php';
-// Frontend META_TITLE
+// Home META_TITLE
 isset($_GET["article"]) ?: $meta["META_TITLE"] = 'Sincerity';
 ?>
 

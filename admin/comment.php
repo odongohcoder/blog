@@ -5,10 +5,8 @@ INNER JOIN `users` ON `users`.`id` = `comment`.`userid`
 WHERE `comment`.`postid` = :postid
 ORDER BY `date` DESC
 ";
-$stmt = $pdo->prepare($sql);
-$stmt->bindParam(':postid', $_GET["article"], PDO::PARAM_INT);
-$stmt->execute();
-$comments = $stmt->fetchAll();
+$param = [':postid'=>[$_GET["article"],PDO::PARAM_INT]];
+$comments = Read_DB($pdo,$sql,$param);
 
 $comment_err = '';
 ?>

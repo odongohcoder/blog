@@ -9,6 +9,10 @@ if (!defined('_BASE')){
 
 	<?php if (isset($_GET["article"]) && isset($result[0]['title'])):?>
 
+    <?php if ($author): ?>
+      <form action="admin/article-post.php" method="POST" enctype="multipart/form-data">
+    <?php endif; ?>
+
 		<div class="article-blog">
 			<article>
 				<div class="outer">
@@ -16,8 +20,13 @@ if (!defined('_BASE')){
 						<a href="index.php?subject=<?php echo $result[0][5];?>" class="subject"><?php echo $result[0]['subject'];?></a>
 					</div>
 					<div class="inner">
+            <?php if ($author):?>
+              <h1><input type="text" name="title" value="<?php print $result[0]['title'];?>"></h1>
+              <h2><input type="text" name="subtitle" value="<?php print $result[0]['subtitle'];?>"></h2>
+            <?php else: ?>
 						<h1><?php print $result[0]['title'];?></h1>
 						<h2><?php print $result[0]['subtitle'];?></h2>
+            <?php endif; ?>
 					</div>
 					<div class="inner">
 						<div class="author">
@@ -29,23 +38,40 @@ if (!defined('_BASE')){
 
 				<?php
 				$sql = "SELECT * FROM `paragraph` WHERE `paragraph`.`postid` = :article_id";
-				$stmt = $pdo->prepare($sql);
-				$stmt->bindParam(':article_id', $article_id, PDO::PARAM_INT);
-				$stmt->execute();
-				$paragraph = $stmt->fetchAll();
+        $param = [':article_id'=>[$article_id,PDO::PARAM_INT]];
+        $paragraph = Read_DB($pdo,$sql,$param);
 				?>
 
-				<?php foreach($paragraph as $row):?>
+				<?php foreach($paragraph as $key => $row):?>
 					<?php if ($row['item'] == 'img'):?>
 						<div class="header-image">
-							<img src="img/article/<?php print $row['paragraph']; ?>">
-							<?php ($row['caption']) ? print '<small>' . $row['caption'] . '</small>': ''; ?>
+              <img src="img/article/<?php print $row['paragraph']; ?>">
+              <?php if ($author):?>
+              <span class="editImageButton">
+                <button type="submit" value="Update">
+                  <?php print file_get_contents("img/icon/feather/trash-2.svg"); ?>
+                </button>
+                <label for="editImage<?php print $key;?>" class="button">
+                  <?php print file_get_contents("img/icon/feather/upload.svg"); ?>
+                </label>
+                <input type="file" id="editImage<?php print $key;?>" name="longcopy[<?php print $key;?>]" accept="image/*" class="imageinput <?php echo (!empty($image_err)) ? 'is-invalid' : ''; ?>">
+              </span>
+              <?php endif; ?>
 						</div>
+            <small>
+              <?php ($row['caption']) ? print '<small>' . $row['caption'] . '</small>': ''; ?>
+            </small>
 					<?php elseif($row['item'] == 'txt'):?>
 						<div class="outer">
 							<div class="inner">
-								<p <?php (!$author) ?: print 'contenteditable';?>><?php print $row['paragraph']; ?></p>
-								<?php ($row['caption']) ? print '<small>' . $row['caption'] . '</small>': ''; ?>
+                <?php if ($author):?>
+                  <p><input type="text" name="paragraph" value="<?php print $row['paragraph']; ?>"></p>
+                <?php else: ?>
+                  <p><?php print $row['paragraph']; ?></p>
+                <?php endif; ?>
+                <small>
+                  <?php ($row['caption']) ? print '<small>' . $row['caption'] . '</small>': ''; ?>
+                </small>
 							</div>
 						</div>
 					<?php elseif($row['item'] == 'audio'):?>
@@ -65,6 +91,15 @@ if (!defined('_BASE')){
 			</article>
 		</div>
 
+    <?php if ($author): ?>
+    <div class="form-row">
+      <div class="col">
+        <button type="submit" value="Add post">Update post</button>
+      </div>
+    </div>
+  </form>
+  <?php endif; ?>
+
 		<?php include 'admin/comment.php';?>
 
 	<?php elseif(!empty($result)):?>
@@ -77,10 +112,8 @@ if (!defined('_BASE')){
 
 						<?php
 						$sql = "SELECT `paragraph`.`paragraph` FROM `paragraph` WHERE (`paragraph`.`postid` = :article_id AND `paragraph`.`item` = 'img')";
-						$stmt = $pdo->prepare($sql);
-						$stmt->bindParam(':article_id', $row[0], PDO::PARAM_INT);
-						$stmt->execute();
-						$image = $stmt->fetchAll();
+            $param = [':article_id'=>[$row[0],PDO::PARAM_INT]];
+            $image = Read_DB($pdo,$sql,$param);
 						?>
 
 						<?php if($image):?>

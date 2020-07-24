@@ -90,7 +90,7 @@ $total = $stmt->rowCount();
                   <td><?php echo date("d.m.y", strtotime($row['date']));?></td>
                   <td>
                     <a href="../index.php?article=<?php echo $i;?>">
-                      <?php echo file_get_contents(_BASE . '/img/icon/' . "edit.svg"); ?>
+                      <?php echo file_get_contents(_BASE . '/img/icon/' . "feather/edit.svg"); ?>
                     </a>
                   </td>
                 </tr>

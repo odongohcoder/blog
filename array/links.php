@@ -3,44 +3,44 @@ $pages = [
   'admin' => [
     'name' => 'Admin',
     'link' => 'admin/',
-    'icon' => 'user.svg'
+    'icon' => 'feather/user.svg'
   ],
   'logout' => [
     'name' => 'Logout',
     'link' => 'admin/logout.php',
-    'icon' => 'log-out.svg'
+    'icon' => 'feather/log-out.svg'
   ]
 ];
 $adminmenu = [
   'category' => [
     'name' => 'Category',
     'link' => 'admin/category.php',
-    'icon' => 'paperclip.svg'
+    'icon' => 'feather/paperclip.svg'
   ],
   'write' => [
     'name' => 'Write',
     'link' => 'admin/write.php',
-    'icon' => 'feather.svg'
+    'icon' => 'feather/feather.svg'
   ],
   'archive' => [
     'name' => 'Archive',
     'link' => 'admin/archive.php',
-    'icon' => 'archive.svg'
+    'icon' => 'feather/archive.svg'
   ],
   //'comments' => [
     //'name' => 'Comments',
     //'link' => 'admin/#',
-    //'icon' => 'message-square.svg'
+    //'icon' => 'feather/message-square.svg'
   //],
   'images' => [
     'name' => 'Images',
     'link' => 'admin/images.php',
-    'icon' => 'image.svg'
+    'icon' => 'feather/image.svg'
   ],
   'settings' => [
     'name' => 'Settings',
     'link' => 'admin/settings.php',
-    'icon' => 'sliders.svg'
+    'icon' => 'feather/sliders.svg'
   ]
 ];
 ?>

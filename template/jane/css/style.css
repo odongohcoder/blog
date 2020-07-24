@@ -182,10 +182,6 @@ input[type="submit"],
 button {
 	display: block;
 	cursor: pointer;
-}
-input[type="submit"],
-button {
-	background-color: #fff;
   -moz-appearance: none;
   -webkit-appearance: none;
 }
@@ -209,15 +205,10 @@ button  {
 	cursor: pointer;
 	text-decoration: none;
 }
-a:active,
-a.active,
-a:hover {
-}
 a.button,
 .button,
 button,
 input[type="submit"],
-button,
 nav ul li a,
 a.subject,
 .subject {
@@ -234,11 +225,31 @@ a.subject,
   font-feature-settings: "smcp" 1;
   font-size: 12px;
 }
+a.button,
+.button,
+button,
+input[type="submit"] {
+  background-color: #fff;
+  -webkit-transition: .5s;
+  -moz-transition: .5s;
+  -o-transition: .5s;
+  -ms-transition: .5s;
+  transition: .5s;
+  transition-property: margin, padding, position, background-color;
+}
+a.button:hover,
+.button:hover,
+button:hover,
+input[type="submit"]:hover {
+  background-color: #222;
+  color: #fff;
+}
 h1, h2, h3, h4, h5, h6 {
 	font-weight:normal;
 	margin:0;
 }
-h1 {
+h1,
+form h1 input {
 	font-size: 50px;
 	margin-bottom: 10px;
   font-weight: bolder;
@@ -246,13 +257,15 @@ h1 {
 .item-blog h1 {
   font-size: 30px;
 }
-h2 {
+h2,
+form h2 input {
 	font-size: 30px;
 }
 .item-blog h2 {
   font-size: 20px;
 }
-p {
+p,
+form p input {
 	font-size: 18px;
 	line-height: 1.2;
 	overflow-wrap: break-word;
@@ -367,6 +380,9 @@ a#logo {
 }
 .header-image img {
   width:100%;
+}
+.header-image {
+  position: relative;
 }
 article .p {
 	padding-bottom: 5px;
@@ -541,6 +557,26 @@ a.return {
 .breadcrumb ul li a {
 	padding:5px;
 	font-weight: normal;
+}
+
+.editImageButton {
+  position: absolute;
+  top:50%;
+  left:50%;
+  margin-top: -20px;
+  margin-left: -40px;
+  overflow: auto;
+}
+.editImageButton label {
+  background-color: #fff;
+  line-height: 1;
+}
+.editImageButton .imageinput {
+  display: none;
+}
+.editImageButton label,
+.editImageButton button {
+  float: left;
 }
 
 @media only screen and (max-width: 1024px) {

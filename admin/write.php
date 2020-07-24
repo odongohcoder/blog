@@ -138,9 +138,7 @@ include_once 'start.php';
   (!isset($_GET["subject"])) ? $subject_id = '0' : $subject_id = intval($_GET["subject"]);
 
   $sql = "SELECT `id`, `subject` FROM `subject`";
-  $stmt = $pdo->prepare($sql);
-  $stmt->execute();
-  $subjectList = $stmt->fetchAll();
+  $subjectList = Read_DB($pdo,$sql,null);
 ?>
 
 <!doctype html>

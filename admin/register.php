@@ -6,7 +6,7 @@ include_once '../array/directory.php';
 // Include db config
 require_once '../creds/db.php';
 // Include db config
-require_once 'admin/functions.php';
+require_once '../admin/functions.php';
 // Include settings
 require_once '../array/template.php';
 // Include meta vars

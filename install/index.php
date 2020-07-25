@@ -121,7 +121,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 						<?php echo file_get_contents(_BASE . '/img/icon/' . "feather/sun.svg"); ?><?php echo file_get_contents(_BASE . '/img/icon/' . "feather/moon.svg"); ?>
 					</label>
 					<nav class="menu" id="main">
-						<?php include 'menu.php'; ?>
+						<?php include '../template/' . $template . '/menu.php'; ?>
 					</nav>
 			</header>
 

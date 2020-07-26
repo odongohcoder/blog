@@ -102,6 +102,7 @@ if (!defined('_BASE')){
 
 		<?php include 'admin/comment.php';?>
 
+    <!-- START STARTPAGE -->
 	<?php elseif(!empty($result)):?>
 		<div id="grid">
 	<?php foreach($result as $i => $row):?>
@@ -151,6 +152,7 @@ if (!defined('_BASE')){
 		</div>
 	<?php endforeach;?>
 	</div>
+  <!-- END STARTPAGE -->
 
 <?php else:?>
 

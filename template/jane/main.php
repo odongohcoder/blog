@@ -48,7 +48,7 @@ if (!defined('_BASE')){
               <img src="img/article/<?php print $row['paragraph']; ?>">
               <?php if ($author):?>
               <span class="editImageButton">
-                <button type="submit" value="Update">
+                <button type="submit" value="Delete">
                   <?php print file_get_contents("img/icon/feather/trash-2.svg"); ?>
                 </button>
                 <label for="editImage<?php print $key;?>" class="button">
@@ -65,7 +65,7 @@ if (!defined('_BASE')){
 						<div class="outer">
 							<div class="inner">
                 <?php if ($author):?>
-                  <p><input type="text" name="paragraph" value="<?php print $row['paragraph']; ?>"></p>
+                  <p><input type="text" name="longcopy[<?php print $key;?>]" value="<?php print $row['paragraph']; ?>"></p>
                 <?php else: ?>
                   <p><?php print $row['paragraph']; ?></p>
                 <?php endif; ?>

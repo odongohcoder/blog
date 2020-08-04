@@ -10,7 +10,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
   // Put post vars in regular vars
   $title =  isset($_POST['title']) ? trim($_POST['title']) : '';
   $subtitle =  isset($_POST['subtitle']) ? trim($_POST['subtitle']) : '';
-  $subject =  isset($_POST['subject']) ? trim($_POST['subject']) : '';
+  // $subject =  isset($_POST['subject']) ? trim($_POST['subject']) : '';
 
   // Create 2 dimensional arrays of files
   if (isset($_FILES['longcopy']['name'])) {
@@ -24,32 +24,15 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
   if (!empty($_POST['longcopy'])) {
     $longcopy_text = $_POST['longcopy'];
     foreach ($longcopy_text as $key => $val){
-      // Validate longcopy
       (!empty($val)) ?: $longcopy_err = 'Please enter longcopy' ;
       $longcopy_text[$key] = [];
-      $fileParameters = ['dl=0','dl=1'];
-      $tmp = explode('?', $val);
-      $fileParameter = strtolower(end($tmp));
-      $fileExtensionsAudio = ['mp3','m4a','ogg'];
-      $fileExtensionsImages = ['jpeg','jpg','png','gif'];
-      $tmp = explode('.', strtok($val, "?"));
-      $fileExtension = strtolower(end($tmp));
-      if(in_array($fileExtension,$fileExtensionsAudio)){
-        if(in_array($fileParameter,$fileParameters)){
-          array_push($longcopy_text[$key], 'audio', strtok($val, "?") . '?dl=1');
-        } else {
-          array_push($longcopy_text[$key], 'audio', $val);
-        }
-      } elseif(in_array($fileExtension,$fileExtensionsImages)){
-        array_push($longcopy_text[$key], 'img', $val);
-      } else {
-        array_push($longcopy_text[$key], 'txt', $val);
-      }
+      array_push($longcopy_text[$key], 'txt', $val);
     }
   }
   // Combine 2 dimensional arrays and sort in order of appearance
   $longcopy = $longcopy_text + $longcopy_files;
   ksort($longcopy);
+  print_r($longcopy);
 
   // Validate title
   if(empty($title)){
@@ -62,11 +45,9 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
   // Prepare file upload
 if($_FILES){
-  $fileExtensions = ['jpeg','jpg','png','gif'];
   foreach ($_FILES['longcopy']['name'] as $i => $fileName){
     // Validate image
     (!empty($fileName)) ?: $image_err = 'Please upload image' ;
-    //$fileName = $_FILES['longcopy']['name'][$i];
     $fileSize = $_FILES['longcopy']['size'][$i];
     $fileTmpName  = $_FILES['longcopy']['tmp_name'][$i];
     $fileType = $_FILES['longcopy']['type'][$i];
@@ -74,7 +55,7 @@ if($_FILES){
     $fileExtension = strtolower(end($tmp));
     // Validate image
     if($fileName){
-      if(!in_array($fileExtension,$fileExtensions)){
+      if(!in_array($fileExtension,$fileExtensionsImages)){
         $image_err = 'Please upload a JPG, PNG or GIF file';
       } elseif($fileSize > 2000000){
         $image_err = 'Please upload a file less than or equal to 2MB';

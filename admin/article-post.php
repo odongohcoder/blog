@@ -46,21 +46,16 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
   // Prepare file upload
 if($_FILES){
   foreach ($_FILES['longcopy']['name'] as $i => $fileName){
-    // Validate image
     (!empty($fileName)) ?: $image_err = 'Please upload image' ;
     $fileSize = $_FILES['longcopy']['size'][$i];
     $fileTmpName  = $_FILES['longcopy']['tmp_name'][$i];
     $fileType = $_FILES['longcopy']['type'][$i];
-    $tmp = explode('.', $fileName);
-    $fileExtension = strtolower(end($tmp));
-    // Validate image
     if($fileName){
-      if(!in_array($fileExtension,$fileExtensionsImages)){
+      if(Check_File($fileName) != 'img'){
         $image_err = 'Please upload a JPG, PNG or GIF file';
       } elseif($fileSize > 2000000){
         $image_err = 'Please upload a file less than or equal to 2MB';
       } elseif(empty($image_err) && empty($title_err) && empty($subtitle_err) && empty($longcopy_err)){
-        // Resize Image -- $maxDim defined in ../array/sizes.php included in start.php
         list($width, $height) = getimagesize($fileTmpName);
         $src = imagecreatefromstring(file_get_contents($fileTmpName));
         foreach ($maxDim as $keyDim => $valDim){

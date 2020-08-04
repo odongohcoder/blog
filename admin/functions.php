@@ -1,4 +1,5 @@
 <?php
+
 //Read database function
 function Read_DB($pdo,$sql,$param){
   $stmt = $pdo->prepare($sql);
@@ -12,20 +13,15 @@ function Read_DB($pdo,$sql,$param){
   return $result;
 }
 
-//Check filelink function
-function Check_File($key,$val){
-  $tmp = explode('?', $val);
-  $fileParameter = strtolower(end($tmp));
-  $tmp = explode('.', strtok($val, "?"));
+//Check file function
+function Check_File($file){
+  $tmp = explode('.', $file);
   $fileExtension = strtolower(end($tmp));
   if(in_array($fileExtension,$fileExtensionsAudio)){
-    if(in_array($fileParameter,$fileParameters)){
-      array_push($longcopy_text[$key], 'audio', strtok($val, "?") . '?dl=1');
-    } else {
-      array_push($longcopy_text[$key], 'audio', $val);
-    }
+    return 'audio';
   } elseif(in_array($fileExtension,$fileExtensionsImages)){
-    array_push($longcopy_text[$key], 'img', $val);
+    return 'img';
   }
 }
+
 ?>

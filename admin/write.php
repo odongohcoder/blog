@@ -15,6 +15,7 @@ include_once 'start.php';
     if (isset($_FILES['longcopy']['name'])) {
       $longcopy_files = $_FILES['longcopy']['name'];
       foreach ($longcopy_files as $key => $val){
+        (!empty($val)) ?: $image_err = 'Please upload image';
         $longcopy_files[$key] = [];
         array_push($longcopy_files[$key], 'img', $val);
       }
@@ -23,27 +24,9 @@ include_once 'start.php';
     if (!empty($_POST['longcopy'])) {
       $longcopy_text = $_POST['longcopy'];
       foreach ($longcopy_text as $key => $val){
-        // Validate longcopy
         (!empty($val)) ?: $longcopy_err = 'Please enter longcopy' ;
         $longcopy_text[$key] = [];
-        $fileParameters = ['dl=0','dl=1'];
-        $tmp = explode('?', $val);
-        $fileParameter = strtolower(end($tmp));
-        $fileExtensionsAudio = ['mp3','m4a','ogg'];
-        $fileExtensionsImages = ['jpeg','jpg','png','gif'];
-        $tmp = explode('.', strtok($val, "?"));
-        $fileExtension = strtolower(end($tmp));
-        if(in_array($fileExtension,$fileExtensionsAudio)){
-          if(in_array($fileParameter,$fileParameters)){
-            array_push($longcopy_text[$key], 'audio', strtok($val, "?") . '?dl=1');
-          } else {
-            array_push($longcopy_text[$key], 'audio', $val);
-          }
-        } elseif(in_array($fileExtension,$fileExtensionsImages)){
-          array_push($longcopy_text[$key], 'img', $val);
-        } else {
-          array_push($longcopy_text[$key], 'txt', $val);
-        }
+        array_push($longcopy_text[$key], 'txt', $val);
       }
     }
     // Combine 2 dimensional arrays and sort in order of appearance
@@ -61,38 +44,17 @@ include_once 'start.php';
 
     // Prepare file upload
   if($_FILES){
-    $fileExtensions = ['jpeg','jpg','png','gif'];
     foreach ($_FILES['longcopy']['name'] as $i => $fileName){
-      // Validate image
-      (!empty($fileName)) ?: $image_err = 'Please upload image' ;
-      //$fileName = $_FILES['longcopy']['name'][$i];
       $fileSize = $_FILES['longcopy']['size'][$i];
       $fileTmpName  = $_FILES['longcopy']['tmp_name'][$i];
       $fileType = $_FILES['longcopy']['type'][$i];
-      $tmp = explode('.', $fileName);
-      $fileExtension = strtolower(end($tmp));
-      // Validate image
       if($fileName){
-        if(!in_array($fileExtension,$fileExtensions)){
+        if(Specify_File($fileName) != 'img'){
           $image_err = 'Please upload a JPG, PNG or GIF file';
         } elseif($fileSize > 2000000){
           $image_err = 'Please upload a file less than or equal to 2MB';
         } elseif(empty($image_err) && empty($title_err) && empty($subtitle_err) && empty($longcopy_err)){
-          // Resize Image -- $maxDim defined in ../array/sizes.php included in start.php
-          list($width, $height) = getimagesize($fileTmpName);
-          $src = imagecreatefromstring(file_get_contents($fileTmpName));
-          foreach ($maxDim as $keyDim => $valDim){
-            $ratio = $width/$height;
-            $new_width = ($width > $valDim) ? $valDim : $width;
-            $new_height = ($width > $valDim) ? $valDim/$ratio : $height;
-            $subfolder = ($keyDim == 'large') ? '' : $keyDim . '/';
-            $uploadPath = _CURRENTDIR . _UPLOADDIRECTORY . $subfolder . basename($fileName);
-            $dst = imagecreatetruecolor($new_width, $new_height);
-            imagecopyresampled($dst, $src, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
-            imagejpeg($dst, $uploadPath, 100);
-            imagedestroy($dst);
-          }
-          imagedestroy($src);
+          Upload_Image($fileTmpName,$fileName,$maxDim);
         }
       }
     }

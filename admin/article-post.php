@@ -1,21 +1,20 @@
 <?php
 include_once 'start.php';
 
-// Process form when post submit
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
   // Sanitize POST
   $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
-  // Put post vars in regular vars
   $title =  isset($_POST['title']) ? trim($_POST['title']) : '';
   $subtitle =  isset($_POST['subtitle']) ? trim($_POST['subtitle']) : '';
-  // $subject =  isset($_POST['subject']) ? trim($_POST['subject']) : '';
+  $subject =  isset($_POST['subject']) ? trim($_POST['subject']) : '';
 
   // Create 2 dimensional arrays of files
   if (isset($_FILES['longcopy']['name'])) {
     $longcopy_files = $_FILES['longcopy']['name'];
     foreach ($longcopy_files as $key => $val){
+      (!empty($val)) ?: $image_err = 'Please upload image';
       $longcopy_files[$key] = [];
       array_push($longcopy_files[$key], 'img', $val);
     }
@@ -46,30 +45,16 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
   // Prepare file upload
 if($_FILES){
   foreach ($_FILES['longcopy']['name'] as $i => $fileName){
-    (!empty($fileName)) ?: $image_err = 'Please upload image' ;
     $fileSize = $_FILES['longcopy']['size'][$i];
     $fileTmpName  = $_FILES['longcopy']['tmp_name'][$i];
     $fileType = $_FILES['longcopy']['type'][$i];
     if($fileName){
-      if(Check_File($fileName) != 'img'){
+      if(Specify_File($fileName) != 'img'){
         $image_err = 'Please upload a JPG, PNG or GIF file';
       } elseif($fileSize > 2000000){
         $image_err = 'Please upload a file less than or equal to 2MB';
       } elseif(empty($image_err) && empty($title_err) && empty($subtitle_err) && empty($longcopy_err)){
-        list($width, $height) = getimagesize($fileTmpName);
-        $src = imagecreatefromstring(file_get_contents($fileTmpName));
-        foreach ($maxDim as $keyDim => $valDim){
-          $ratio = $width/$height;
-          $new_width = ($width > $valDim) ? $valDim : $width;
-          $new_height = ($width > $valDim) ? $valDim/$ratio : $height;
-          $subfolder = ($keyDim == 'large') ? '' : $keyDim . '/';
-          $uploadPath = _CURRENTDIR . _UPLOADDIRECTORY . $subfolder . basename($fileName);
-          $dst = imagecreatetruecolor($new_width, $new_height);
-          imagecopyresampled($dst, $src, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
-          imagejpeg($dst, $uploadPath, 100);
-          imagedestroy($dst);
-        }
-        imagedestroy($src);
+        Upload_Image($fileTmpName,$fileName,$maxDim);
       }
     }
   }

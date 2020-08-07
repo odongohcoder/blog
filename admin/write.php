@@ -63,36 +63,24 @@ include_once 'start.php';
     // Make sure errors are empty
     if(empty($title_err) && empty($subtitle_err) && empty($image_err) && empty($longcopy_err)){
 
-      // Prepare insert query
       $sql = 'INSERT INTO `post` (`userid`, `title`, `subtitle`, `subject`, `date`) VALUES (:userid, :title, :subtitle, :subject, :datum)';
+      $param = [':userid'=>[$_SESSION['id'],PDO::PARAM_STR],':title'=>[$title,PDO::PARAM_STR],':subtitle'=>[$subtitle,PDO::PARAM_STR],':subject'=>[$subject[0],PDO::PARAM_STR],':datum'=>[$datum,PDO::PARAM_STR]];
+      Write_DB($pdo,$sql,$param);
 
-      if($stmt = $pdo->prepare($sql)){
-        // Bind params
-        $stmt->bindParam(':userid', $_SESSION['id'], PDO::PARAM_INT);
-        $stmt->bindParam(':title', $title, PDO::PARAM_STR);
-        $stmt->bindParam(':subtitle', $subtitle, PDO::PARAM_STR);
-        $stmt->bindParam(':subject', $subject, PDO::PARAM_STR);
-        $stmt->bindParam(':datum', $datum, PDO::PARAM_STR);
-        $stmt->execute();
-        $lastInsertId = $pdo->lastInsertId();
+      $lastInsertId = $pdo->lastInsertId();
 
-        if(!empty($longcopy)){
-          foreach ($longcopy as $item => $row){
-            $sql = 'INSERT INTO `paragraph` (`userid`, `paragraph`, `postid`, `item`) VALUES (:userid, :paragraph, :postid, :item)';
-            $stmt = $pdo->prepare($sql);
-            $stmt->bindParam(':userid', $_SESSION['id'], PDO::PARAM_STR);
-            $stmt->bindParam(':paragraph', $row[1], PDO::PARAM_STR);
-            $stmt->bindParam(':postid', $lastInsertId, PDO::PARAM_STR);
-            $stmt->bindParam(':item', $row[0], PDO::PARAM_STR);
-            $stmt->execute();
-          }
+      if(!empty($longcopy)){
+        foreach ($longcopy as $item => $row){
+          $sql = 'INSERT INTO `paragraph` (`userid`, `paragraph`, `postid`, `item`) VALUES (:userid, :paragraph, :postid, :item)';
+          $param = [':userid'=>[$_SESSION['id'],PDO::PARAM_STR],':paragraph'=>[$row[1],PDO::PARAM_STR],':postid'=>[$lastInsertId,PDO::PARAM_STR],':item'=>[$row[0],PDO::PARAM_STR]];
+          Write_DB($pdo,$sql,$param);
         }
+      }
 
-        if($row === end($longcopy) || empty($longcopy)){
-          $admintitle = "Upload successful";
-        } else {
-          die('Something went wrong');
-        }
+      if($row === end($longcopy) || empty($longcopy)){
+        $admintitle = "Upload successful";
+      } else {
+        die('Something went wrong');
       }
     }
   }

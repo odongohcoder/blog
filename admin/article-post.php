@@ -63,36 +63,10 @@ if($_FILES){
   // Make sure errors are empty
   if(empty($title_err) && empty($subtitle_err) && empty($image_err) && empty($longcopy_err)){
 
-    // Prepare insert query
-    $sql = 'INSERT INTO `post` (`userid`, `title`, `subtitle`, `subject`, `date`) VALUES (:userid, :title, :subtitle, :subject, :datum)';
-
-    if($stmt = $pdo->prepare($sql)){
-      // Bind params
-      $stmt->bindParam(':userid', $_SESSION['id'], PDO::PARAM_INT);
-      $stmt->bindParam(':title', $title, PDO::PARAM_STR);
-      $stmt->bindParam(':subtitle', $subtitle, PDO::PARAM_STR);
-      $stmt->bindParam(':subject', $subject, PDO::PARAM_STR);
-      $stmt->bindParam(':datum', $datum, PDO::PARAM_STR);
-      $stmt->execute();
-      $postid = $pdo->lastInsertId();
-
-      if(!empty($longcopy)){
-        foreach ($longcopy as $item => $row){
-          $sql = 'INSERT INTO `paragraph` (`userid`, `paragraph`, `postid`, `item`) VALUES (:userid, :paragraph, :postid, :item)';
-          $stmt = $pdo->prepare($sql);
-          $stmt->bindParam(':userid', $_SESSION['id'], PDO::PARAM_STR);
-          $stmt->bindParam(':paragraph', $row[1], PDO::PARAM_STR);
-          $stmt->bindParam(':postid', $postid, PDO::PARAM_STR);
-          $stmt->bindParam(':item', $row[0], PDO::PARAM_STR);
-          $stmt->execute();
-        }
-      }
-
-      if($row === end($longcopy) || empty($longcopy)){
-        header('location: ../index.php?article='.$postid);
-      } else {
-        die('Something went wrong');
-      }
+    if($row === end($longcopy) || empty($longcopy)){
+      header('location: ../index.php?article='.$postid);
+    } else {
+      die('Something went wrong');
     }
   }
 }

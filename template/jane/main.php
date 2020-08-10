@@ -20,13 +20,8 @@ if (!defined('_BASE')){
 						<a href="index.php?subject=<?php echo $result[0][5];?>" class="subject"><?php echo $result[0]['subject'];?></a>
 					</div>
 					<div class="inner">
-            <?php if ($author):?>
-              <h1><input type="text" name="title" value="<?php print $result[0]['title'];?>"></h1>
-              <h2><input type="text" name="subtitle" value="<?php print $result[0]['subtitle'];?>"></h2>
-            <?php else: ?>
-						<h1><?php print $result[0]['title'];?></h1>
-						<h2><?php print $result[0]['subtitle'];?></h2>
-            <?php endif; ?>
+            <h1><?php print Template_Vars($author,$result[0]['title'],'text','title'); ?></h1>
+            <h2><?php print Template_Vars($author,$result[0]['subtitle'],'text','subtitle'); ?></h2>
 					</div>
 					<div class="inner">
 						<div class="author">
@@ -58,20 +53,10 @@ if (!defined('_BASE')){
               </span>
               <?php endif; ?>
 						</div>
-            <small>
-              <?php ($row['caption']) ? print '<small>' . $row['caption'] . '</small>': ''; ?>
-            </small>
 					<?php elseif($row['item'] == 'txt'):?>
 						<div class="outer">
 							<div class="inner">
-                <?php if ($author):?>
-                  <p><input type="text" name="longcopy[<?php print $key;?>]" value="<?php print $row['paragraph']; ?>"></p>
-                <?php else: ?>
-                  <p><?php print $row['paragraph']; ?></p>
-                <?php endif; ?>
-                <small>
-                  <?php ($row['caption']) ? print '<small>' . $row['caption'] . '</small>': ''; ?>
-                </small>
+                <p><?php print Template_Vars($author,$row['paragraph'],'text','longcopy['.$key.']'); ?></p>
 							</div>
 						</div>
 					<?php elseif($row['item'] == 'audio'):?>
@@ -81,12 +66,14 @@ if (!defined('_BASE')){
 									<source src="<?php print $row['paragraph']; ?>" type="audio/mpeg">
 									Your browser does not support the audio tag.
 								</audio>
-								<small>
-									<?php ($row['caption']) ? print $row['caption'] : print $row['paragraph']; ?>
-								</small>
 							</div>
 						</div>
 					<?php endif; ?>
+          <?php if ($row['caption']): ?>
+            <small>
+              <?php print $row['caption']; ?>
+            </small>
+          <?php endif; ?>
 				<?php endforeach;?>
 			</article>
 		</div>

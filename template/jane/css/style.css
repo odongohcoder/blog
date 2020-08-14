@@ -480,7 +480,7 @@ form input:required:invalid {
     box-shadow:none !important;
     border: 1px solid #222;
 }
-form .users-image {
+form .form-group .users-image {
   float:none;
   width: 60px;
 	height: 60px;

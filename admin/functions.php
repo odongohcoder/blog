@@ -24,24 +24,6 @@ function Write_DB($pdo,$sql,$param){
   $stmt->execute();
 }
 
-// Function set template variable
-function Template_Vars($author,$result,$type,$name){
-  if ($author && ($type != 'file')) {
-    $author_result = '<input type="';
-    $author_result .= $type;
-    $author_result .= '" ';
-    $author_result .= 'name="';
-    $author_result .= $name;
-    $author_result .= '" ';
-    $author_result .= 'value="';
-    $author_result .= $result;
-    $author_result .= '">';
-    return $author_result;
-  } elseif ($type != 'file') {
-    return $result;
-  }
-}
-
 // Function: specify file
 function Specify_File($file){
   $fileExtensionsImages = ['jpeg','jpg','png','gif'];
@@ -57,7 +39,8 @@ function Specify_File($file){
 }
 
 // Function: upload image
-function Upload_Image($fileTmpName,$fileName,$maxDim){
+function Upload_Image($fileTmpName,$fileName){
+  global $maxDim;
   list($width, $height) = getimagesize($fileTmpName);
   $src = imagecreatefromstring(file_get_contents($fileTmpName));
   foreach ($maxDim as $keyDim => $valDim){

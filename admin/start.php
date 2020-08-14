@@ -14,6 +14,8 @@ require_once '../creds/db.php';
 include_once '../array/sizes.php';
 // Include functions
 require_once '../admin/functions.php';
+// Include functions
+require_once '../admin/classes/class.post.php';
 // Include settings
 require_once '../array/template.php';
 // Include menu items

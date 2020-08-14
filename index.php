@@ -7,6 +7,8 @@ require_once 'array/directory.php';
 require_once 'creds/db.php';
 // Include db config
 require_once 'admin/functions.php';
+// Include functions
+require_once 'admin/classes/class.post.php';
 // Include settings
 require_once 'array/template.php';
 

@@ -2,6 +2,10 @@
 if (!defined('_BASE')){
   header('location: ../../index.php');
 }
+$sql = "SELECT `subject` FROM `subject`";
+$subject = Read_DB($pdo,$sql,null);
+
+$post = new Post();
 ?>
 
 <!-- START CONTAINER -->
@@ -20,8 +24,8 @@ if (!defined('_BASE')){
 						<a href="index.php?subject=<?php echo $result[0][5];?>" class="subject"><?php echo $result[0]['subject'];?></a>
 					</div>
 					<div class="inner">
-            <h1><?php print Template_Vars($author,$result[0]['title'],'text','title'); ?></h1>
-            <h2><?php print Template_Vars($author,$result[0]['subtitle'],'text','subtitle'); ?></h2>
+            <h1><?php echo $post->set_text($result[0]['title'],'title'); ?></h1>
+            <h2><?php echo $post->set_text($result[0]['subtitle'],'subtitle'); ?></h2>
 					</div>
 					<div class="inner">
 						<div class="author">
@@ -40,23 +44,12 @@ if (!defined('_BASE')){
 				<?php foreach($paragraph as $key => $row):?>
 					<?php if ($row['item'] == 'img'):?>
 						<div class="header-image">
-              <img src="img/article/<?php print $row['paragraph']; ?>">
-              <?php if ($author):?>
-              <span class="editImageButton">
-                <button type="submit" value="Delete">
-                  <?php print file_get_contents("img/icon/feather/trash-2.svg"); ?>
-                </button>
-                <label for="editImage<?php print $key;?>" class="button">
-                  <?php print file_get_contents("img/icon/feather/upload.svg"); ?>
-                </label>
-                <input type="file" id="editImage<?php print $key;?>" name="longcopy[<?php print $key;?>]" accept="image/*" class="imageinput <?php echo (!empty($image_err)) ? 'is-invalid' : ''; ?>">
-              </span>
-              <?php endif; ?>
+              <?php echo $post->set_image($key,$row['paragraph']); ?>
 						</div>
 					<?php elseif($row['item'] == 'txt'):?>
 						<div class="outer">
 							<div class="inner">
-                <p><?php print Template_Vars($author,$row['paragraph'],'text','longcopy['.$key.']'); ?></p>
+                <p><?php echo $post->set_text($row['paragraph'],'longcopy['.$key.']'); ?></p>
 							</div>
 						</div>
 					<?php elseif($row['item'] == 'audio'):?>
@@ -71,7 +64,7 @@ if (!defined('_BASE')){
 					<?php endif; ?>
           <?php if ($row['caption']): ?>
             <small>
-              <?php print $row['caption']; ?>
+              <?php echo $post->set_text($row['caption'],'longcopy['.$key.']'); ?>
             </small>
           <?php endif; ?>
 				<?php endforeach;?>

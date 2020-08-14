@@ -54,7 +54,7 @@ include_once 'start.php';
         } elseif($fileSize > 2000000){
           $image_err = 'Please upload a file less than or equal to 2MB';
         } elseif(empty($image_err) && empty($title_err) && empty($subtitle_err) && empty($longcopy_err)){
-          Upload_Image($fileTmpName,$fileName,$maxDim);
+          Upload_Image($fileTmpName,$fileName);
         }
       }
     }

@@ -1,5 +1,5 @@
 <?php
-class Post {
+class Article {
   private $value;
 
   function set_text($value,$name) {

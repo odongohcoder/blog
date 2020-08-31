@@ -2,14 +2,12 @@
 if (!defined('_BASE')){
   header('location: ../../index.php');
 }
-$sql = "SELECT * FROM `subject`";
-$subjects = Read_DB($pdo,$sql,null);
-
-$sql = "SELECT * FROM `paragraph` WHERE `paragraph`.`postid` = :article_id";
-$param = [':article_id'=>[$article_id,PDO::PARAM_INT]];
-$paragraph = Read_DB($pdo,$sql,$param);
-
-$post = new Post();
+// Get subjects data
+require_once 'engine/queries/db.subjects.php';
+// Get paragraph data
+require_once 'engine/queries/db.paragraph.php';
+// Create new Post class
+$article = new Article();
 ?>
 
     <?php if ($author): ?>
@@ -21,11 +19,11 @@ $post = new Post();
 
 				<div class="outer">
 					<div class="inner">
-            <?php $post->set_select($subjects,$result[0][5]); ?>
+            <?php $article->set_select($subjects,$result[0][5]); ?>
 					</div>
 					<div class="inner">
-            <h1><?php $post->set_text($result[0]['title'],'title'); ?></h1>
-            <h2><?php $post->set_text($result[0]['subtitle'],'subtitle'); ?></h2>
+            <h1><?php $article->set_text($result[0]['title'],'title'); ?></h1>
+            <h2><?php $article->set_text($result[0]['subtitle'],'subtitle'); ?></h2>
 					</div>
 					<div class="inner">
 						<div class="author">
@@ -38,12 +36,12 @@ $post = new Post();
 				<?php foreach($paragraph as $key => $row):?>
 					<?php if ($row['item'] == 'img'):?>
 						<div class="header-image">
-              <?php $post->set_image($key,$row['paragraph']); ?>
+              <?php $article->set_image($key,$row['paragraph']); ?>
 						</div>
 					<?php elseif($row['item'] == 'txt'):?>
 						<div class="outer">
 							<div class="inner">
-                <p><?php $post->set_text($row['paragraph'],'longcopy['.$key.']'); ?></p>
+                <p><?php $article->set_text($row['paragraph'],'longcopy['.$key.']'); ?></p>
 							</div>
 						</div>
 					<?php elseif($row['item'] == 'audio'):?>
@@ -58,7 +56,7 @@ $post = new Post();
 					<?php endif; ?>
           <?php if ($row['caption']): ?>
             <small>
-              <?php $post->set_text($row['caption'],'longcopy['.$key.']'); ?>
+              <?php $article->set_text($row['caption'],'longcopy['.$key.']'); ?>
             </small>
           <?php endif; ?>
 				<?php endforeach;?>
@@ -70,4 +68,4 @@ $post = new Post();
     </form>
   <?php endif; ?>
 
-		<?php include 'template/' . $template . '/comment.php';?>
+	<?php include 'template/' . $template . '/comment.php';?>

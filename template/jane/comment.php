@@ -1,14 +1,6 @@
 <?php
-$sql = "
-SELECT `comment`.`comment`, `comment`.`date`, `users`.`id`, `users`.`name`, `users`.`users_image` FROM `comment`
-INNER JOIN `users` ON `users`.`id` = `comment`.`userid`
-WHERE `comment`.`postid` = :postid
-ORDER BY `date` DESC
-";
-$param = [':postid'=>[$_GET["article"],PDO::PARAM_INT]];
-$comments = Read_DB($pdo,$sql,$param);
-
-$comment_err = '';
+// Include template
+require_once 'engine/queries/db.comments.php';
 ?>
 
 <?php if(!empty($comments)):?>

@@ -11,14 +11,11 @@ require_once 'engine/functions/function.write_db.php';
 require_once 'engine/functions/function.specify_file.php';
 require_once 'engine/functions/function.upload_image.php';
 // Include functions
-require_once 'engine/classes/class.post.php';
-// Include settings
+require_once 'engine/classes/class.article.php';
+// Include template
 require_once 'engine/queries/db.template.php';
-
 // Check if blog is private
-$sql = "SELECT `bool` FROM `settings` WHERE `name` = :private";
-$param = [':private'=>['Private',PDO::PARAM_INT]];
-$private = Read_DB($pdo,$sql,$param);
+require_once 'engine/queries/db.private.php';
 
 if((!isset($_SESSION['email']) || empty($_SESSION['email'])) && $private[0]['bool'] == '1'){
   header('location: admin/');

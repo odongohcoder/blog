@@ -17,18 +17,18 @@ require_once '../engine/functions/function.read_db.php';
 require_once '../engine/functions/function.write_db.php';
 require_once '../engine/functions/function.specify_file.php';
 require_once '../engine/functions/function.upload_image.php';
-// Include functions
-require_once '../engine/classes/class.post.php';
-// Include settings
+// Include classes
+require_once '../engine/classes/class.article.php';
+// Include queries
 require_once '../engine/queries/db.template.php';
 // Include menu items
 include_once '../array/links.php';
 
 // Init vars
 $admintitle = 'Admin';
-foreach ($adminmenu as $row){
-  if (_DIR . '/' . _FILE == $row['link']) {
-    $admintitle = $row['name'];
+foreach ($adminmenu as $val){
+  if (_DIR . '/' . _FILE == $val['link']) {
+    $admintitle = $val['name'];
   }
 }
 $datum = date("Y-m-d H:i:s");

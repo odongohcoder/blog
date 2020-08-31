@@ -1,5 +1,5 @@
 <?php
-include_once 'start.php';
+include_once '../includes/start.php';
 
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
   $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);

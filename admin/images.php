@@ -1,5 +1,5 @@
 <?php
-include_once 'start.php';
+include_once '../engine/includes/start.php';
 
   // Delete Files
   if($_SERVER['REQUEST_METHOD'] === 'POST'){

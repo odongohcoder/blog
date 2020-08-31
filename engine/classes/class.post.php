@@ -11,6 +11,10 @@ class Post {
     global $author;
     include('admin/inputTypeFile.php');
   }
+  function set_select($list,$selected) {
+    global $author;
+    include('admin/inputTypeSelect.php');
+  }
 
 }
 ?>

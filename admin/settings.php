@@ -1,5 +1,5 @@
 <?php
-include_once 'start.php';
+include_once '../engine/includes/start.php';
 
 if (!isset($_SESSION['admin']) && !defined('_BASE')){
   header('location: ../admin/');
@@ -30,7 +30,7 @@ $setting = [];
   <div class="inner">
 
     <h1><?php echo $admintitle; ?></h1>
-    <form action="setting-post.php" method="POST" enctype="multipart/form-data">
+    <form action="../engine/posts/post.setting.php" method="POST" enctype="multipart/form-data">
       <table>
         <?php foreach($settings as $row):?>
           <tr>

@@ -7,17 +7,20 @@ if(!isset($_SESSION['email']) || empty($_SESSION['email'])){
   exit;
 }
 // Include paths
-include_once '../array/directory.php';
+include_once '../engine/constants/directory.php';
 // Include db config
 require_once '../creds/db.php';
 // Include image sizes
 include_once '../array/sizes.php';
 // Include functions
-require_once '../admin/functions.php';
+require_once '../engine/functions/function.read_db.php';
+require_once '../engine/functions/function.write_db.php';
+require_once '../engine/functions/function.specify_file.php';
+require_once '../engine/functions/function.upload_image.php';
 // Include functions
-require_once '../admin/classes/class.post.php';
+require_once '../engine/classes/class.post.php';
 // Include settings
-require_once '../array/template.php';
+require_once '../engine/queries/db.template.php';
 // Include menu items
 include_once '../array/links.php';
 

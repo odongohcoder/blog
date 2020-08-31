@@ -2,15 +2,18 @@
 // Init session
 session_start();
 // Include paths
-require_once 'array/directory.php';
+require_once 'engine/constants/directory.php';
 // Include db config
 require_once 'creds/db.php';
-// Include db config
-require_once 'admin/functions.php';
 // Include functions
-require_once 'admin/classes/class.post.php';
+require_once 'engine/functions/function.read_db.php';
+require_once 'engine/functions/function.write_db.php';
+require_once 'engine/functions/function.specify_file.php';
+require_once 'engine/functions/function.upload_image.php';
+// Include functions
+require_once 'engine/classes/class.post.php';
 // Include settings
-require_once 'array/template.php';
+require_once 'engine/queries/db.template.php';
 
 // Check if blog is private
 $sql = "SELECT `bool` FROM `settings` WHERE `name` = :private";
@@ -63,14 +66,24 @@ isset($_GET["article"]) ?: $meta["META_TITLE"] = 'Sincerity';
 <?php include 'template/' . $template . '/head.php'; ?>
 <body>
   <input id="dark-mode" name="dark-mode" class="dark-mode-checkbox visually-hidden" type="checkbox">
-  <!-- Start wrapper -->
+  <!-- START WRAPPER -->
   <div class="wrapper theme-container">
     <?php
     include 'template/' . $template . '/header.php';
-    include 'template/' . $template . '/main.php';
     ?>
+    <!-- START CONTAINER -->
+    <div class="container">
+      <?php if (isset($_GET["article"])): ?>
+        <?php include 'template/' . $template . '/article.php'; ?>
+      <?php elseif(!empty($result)): ?>
+        <?php include 'template/' . $template . '/main.php'; ?>
+      <?php else: ?>
+        <?php include 'template/' . $template . '/error.php'; ?>
+      <?php endif; ?>
+    </div>
+    <!-- END CONTAINER -->
   </div>
-  <!-- End wrapper -->
+  <!-- END WRAPPER -->
   <?php include 'template/' . $template . '/footer.php'; ?>
   <?php
   unset($stmt);

@@ -2,7 +2,7 @@
 // Init session
 session_start();
 // Include paths
-include_once '../array/directory.php';
+include_once '../engine/constants/directory.php';
 // Template
 $template = 'jane';
 // Include meta vars
@@ -47,7 +47,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $directory_data = "<?php\n";
     $directory_data .= "define('_SUBFOLDER', '".$subfolder."');\n";
     $directory_data .= file_get_contents('directory.txt');
-    file_put_contents('../array/directory.php',$directory_data) or die('ERROR: Can not write directory file');
+    file_put_contents('../engine/constants/directory.php',$directory_data) or die('ERROR: Can not write directory file');
 
     $db_data = "<?php\n";
     $db_data .= "defined('_BASE') or die('Something went wrong');\n";

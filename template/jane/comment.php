@@ -11,6 +11,7 @@ $comments = Read_DB($pdo,$sql,$param);
 $comment_err = '';
 ?>
 
+<?php if(!empty($comments)):?>
   <div class="comment-blog">
     <div class="outer">
       <div class="inner"><p><strong>Comments</strong></p></div>
@@ -25,11 +26,12 @@ $comment_err = '';
       <?php endforeach;?>
     </div>
   </div>
+<?php endif;?>
 
 <!-- START COMMENT FORM-->
 <?php if (isset($_SESSION['email']) && _BASE):?>
 
-<form action="admin/comment-post.php" method="POST" enctype="multipart/form-data">
+<form action="engine/posts/post.comment.php" method="POST" enctype="multipart/form-data">
   <div class="outer">
     <div class="inner">
       <div id="Comments">

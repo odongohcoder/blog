@@ -1,5 +1,6 @@
 <?php
-include_once '../engine/includes/start.php';
+include_once '../engine/constants/directory.php';
+include_once 'start.php';
 
 if (!isset($_SESSION['admin']) && !defined('_BASE')){
   header('location: ../admin/');

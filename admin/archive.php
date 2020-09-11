@@ -1,5 +1,6 @@
 <?php
-include_once '../engine/includes/start.php';
+include_once '../engine/constants/directory.php';
+include_once 'start.php';
 
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
   // Sanitize POST

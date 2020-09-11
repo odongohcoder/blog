@@ -1,17 +1,10 @@
 <?php
-if (!defined('_BASE')){
-  header('location: ../../index.php');
-}
-// Get subjects data
-require_once 'engine/queries/db.subjects.php';
-// Get paragraph data
-require_once 'engine/queries/db.paragraph.php';
-// Create new Post class
+defined('_BASE') ?: header('location: ../../index.php');
 $article = new Article();
 ?>
 
     <?php if ($author): ?>
-      <form action="engine/posts/post.article.php" method="POST" enctype="multipart/form-data">
+      <form action="engine/posts/post.article_update.php?article=<?php echo $_GET["article"]; ?>" method="POST" enctype="multipart/form-data">
     <?php endif; ?>
 
 		<div class="article-blog">

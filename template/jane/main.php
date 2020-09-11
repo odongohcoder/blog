@@ -1,7 +1,5 @@
 <?php
-if (!defined('_BASE')){
-  header('location: ../../index.php');
-}
+defined('_BASE') ?: header('location: ../../index.php');
 ?>
 
 <!-- START MAINPAGE -->

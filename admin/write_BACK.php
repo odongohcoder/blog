@@ -1,6 +1,89 @@
 <?php
-include_once '../engine/constants/directory.php';
 include_once 'start.php';
+
+  // Process form when post submit
+  if($_SERVER['REQUEST_METHOD'] === 'POST'){
+    // Sanitize POST
+    $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+    // Put post vars in regular vars
+    $title =  isset($_POST['title']) ? trim($_POST['title']) : '';
+    $subtitle =  isset($_POST['subtitle']) ? trim($_POST['subtitle']) : '';
+    $subject =  isset($_POST['subject']) ? trim($_POST['subject']) : '';
+
+    // Create 2 dimensional arrays of files
+    if (isset($_FILES['longcopy']['name'])) {
+      $longcopy_files = $_FILES['longcopy']['name'];
+      foreach ($longcopy_files as $key => $val){
+        (!empty($val)) ?: $image_err = 'Please upload image';
+        $longcopy_files[$key] = [];
+        array_push($longcopy_files[$key], 'img', $val);
+      }
+    }
+    // Create 2 dimensional arrays of textarea
+    if (!empty($_POST['longcopy'])) {
+      $longcopy_text = $_POST['longcopy'];
+      foreach ($longcopy_text as $key => $val){
+        (!empty($val)) ?: $longcopy_err = 'Please enter longcopy' ;
+        $longcopy_text[$key] = [];
+        array_push($longcopy_text[$key], 'txt', $val);
+      }
+    }
+    // Combine 2 dimensional arrays and sort in order of appearance
+    $longcopy = $longcopy_text + $longcopy_files;
+    ksort($longcopy);
+
+    // Validate title
+    if(empty($title)){
+      $title_err = 'Please enter title';
+    }
+    // Validate subtitle
+    if(empty($subtitle)){
+      $subtitle_err = 'Please enter subtitle';
+    }
+
+    // Prepare file upload
+  if($_FILES){
+    foreach ($_FILES['longcopy']['name'] as $i => $fileName){
+      $fileSize = $_FILES['longcopy']['size'][$i];
+      $fileTmpName  = $_FILES['longcopy']['tmp_name'][$i];
+      $fileType = $_FILES['longcopy']['type'][$i];
+      if($fileName){
+        if(Specify_File($fileName) != 'img'){
+          $image_err = 'Please upload a JPG, PNG or GIF file';
+        } elseif($fileSize > 2000000){
+          $image_err = 'Please upload a file less than or equal to 2MB';
+        } elseif(empty($image_err) && empty($title_err) && empty($subtitle_err) && empty($longcopy_err)){
+          Upload_Image($fileTmpName,$fileName);
+        }
+      }
+    }
+  }
+
+    // Make sure errors are empty
+    if(empty($title_err) && empty($subtitle_err) && empty($image_err) && empty($longcopy_err)){
+
+      $sql = 'INSERT INTO `post` (`userid`, `title`, `subtitle`, `subject`, `date`) VALUES (:userid, :title, :subtitle, :subject, :datum)';
+      $param = [':userid'=>[$_SESSION['id']],':title'=>[$title],':subtitle'=>[$subtitle],':subject'=>[$subject[0]],':datum'=>[$datum]];
+      Write_DB($pdo,$sql,$param);
+
+      $lastInsertId = $pdo->lastInsertId();
+
+      if(!empty($longcopy)){
+        foreach ($longcopy as $item => $row){
+          $sql = 'INSERT INTO `paragraph` (`userid`, `paragraph`, `postid`, `item`) VALUES (:userid, :paragraph, :postid, :item)';
+          $param = [':userid'=>[$_SESSION['id']],':paragraph'=>[$row[1]],':postid'=>[$lastInsertId],':item'=>[$row[0]]];
+          Write_DB($pdo,$sql,$param);
+        }
+      }
+
+      if($row === end($longcopy) || empty($longcopy)){
+        $admintitle = "Upload successful";
+      } else {
+        die('Something went wrong');
+      }
+    }
+  }
 
   (!isset($_GET["subject"])) ? $subject_id = '0' : $subject_id = intval($_GET["subject"]);
 
@@ -24,7 +107,7 @@ include_once 'start.php';
 
         <h1><?php echo $admintitle; ?></h1>
 
-        <form action="../engine/posts/post.article.php" method="POST" enctype="multipart/form-data">
+          <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" enctype="multipart/form-data" novalidate>
             <div id="AddPost">
 
               <div class="form-group">

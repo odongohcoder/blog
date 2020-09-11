@@ -252,7 +252,7 @@ h1,
 form h1 input {
 	font-size: 50px;
 	margin-bottom: 10px;
-  font-weight: bolder;
+  font-weight: bold;
 }
 .item-blog h1 {
   font-size: 30px;
@@ -471,7 +471,6 @@ form textarea {
 form input:focus,
 form textarea:focus {
 	box-shadow:none !important;
-	border: solid 1px #222;
 	outline: none;
 }
 form input:-moz-placeholder,

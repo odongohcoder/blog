@@ -1,8 +1,8 @@
 <?php
-include_once 'start.php';
+// Include db config
+require_once '../../creds/db.php';
 
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
-
   // Sanitize POST
   $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 

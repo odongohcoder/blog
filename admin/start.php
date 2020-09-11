@@ -6,8 +6,6 @@ if(!isset($_SESSION['email']) || empty($_SESSION['email'])){
   header('location: login.php');
   exit;
 }
-// Include paths
-include_once '../engine/constants/directory.php';
 // Include db config
 require_once '../creds/db.php';
 // Include image sizes

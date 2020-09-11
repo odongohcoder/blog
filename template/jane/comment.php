@@ -1,5 +1,6 @@
 <?php
-// Include template
+defined('_BASE') ?: header('location: ../../index.php');
+// Get comments data
 require_once 'engine/queries/db.comments.php';
 ?>
 

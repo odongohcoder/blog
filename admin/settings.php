@@ -1,5 +1,5 @@
 <?php
-include_once '../engine/constants/directory.php';
+include_once '../core/constants/directory.php';
 include_once 'start.php';
 
 if (!isset($_SESSION['admin']) && !defined('_BASE')){
@@ -31,7 +31,7 @@ $setting = [];
   <div class="inner">
 
     <h1><?php echo $admintitle; ?></h1>
-    <form action="../engine/posts/post.setting.php" method="POST" enctype="multipart/form-data">
+    <form action="../core/posts/post.setting.php" method="POST" enctype="multipart/form-data">
       <table>
         <?php foreach($settings as $row):?>
           <tr>

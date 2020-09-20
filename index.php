@@ -2,20 +2,20 @@
 // Init session
 session_start();
 // Include paths
-require_once 'engine/constants/directory.php';
+require_once 'core/constants/directory.php';
 // Include db config
 require_once 'creds/db.php';
 // Include functions
-require_once 'engine/functions/function.read_db.php';
-require_once 'engine/functions/function.write_db.php';
-require_once 'engine/functions/function.specify_file.php';
-require_once 'engine/functions/function.upload_image.php';
+require_once 'core/functions/function.read_db.php';
+require_once 'core/functions/function.write_db.php';
+require_once 'core/functions/function.specify_file.php';
+require_once 'core/functions/function.upload_image.php';
 // Include classes
-require_once 'engine/classes/class.article.php';
+require_once 'core/classes/class.article.php';
 // Include template
-require_once 'engine/queries/db.template.php';
+require_once 'core/queries/db.template.php';
 // Check if blog is private
-require_once 'engine/queries/db.private.php';
+require_once 'core/queries/db.private.php';
 if((!isset($_SESSION['email']) || empty($_SESSION['email'])) && $private[0]['bool'] == '1'){
   header('location: admin/');
   exit;
@@ -25,13 +25,13 @@ if((!isset($_SESSION['email']) || empty($_SESSION['email'])) && $private[0]['boo
 include_once 'array/links.php';
 
 // Include post result
-require_once 'engine/queries/db.result.php';
+require_once 'core/queries/db.result.php';
 // Get subjects data
-require_once 'engine/queries/db.subjects.php';
+require_once 'core/queries/db.subjects.php';
 // Get paragraph data
-!isset($_GET["article"]) ?: require_once 'engine/queries/db.paragraph.php';
+!isset($_GET["article"]) ?: require_once 'core/queries/db.paragraph.php';
 
-$author = isset($_SESSION['id']) && $result ? (($result[0]['id'] == $_SESSION['id']) ? true : false) : false;
+$author = isset($_SESSION['id']) && $result ? (($result[0]['id'] == $_SESSION['id']) || (isset($_GET["article"]) && $_GET["article"] == 'new') ? true : false) : false;
 
 // Include meta vars
 include_once 'array/meta.php';
@@ -51,7 +51,15 @@ isset($_GET["article"]) ?: $meta["META_TITLE"] = 'Sincerity';
     <!-- START CONTAINER -->
     <div class="container">
       <?php if (isset($_GET["article"])): ?>
+        <?php if ($author): ?>
+          <form action="core/posts/post.article_update.php?article=<?php echo $_GET["article"]; ?>" method="POST" enctype="multipart/form-data">
+        <?php endif; ?>
         <?php include 'template/' . $template . '/article.php'; ?>
+        <?php if ($author): ?>
+            <button type="submit" value="Add post">Update post</button>
+          </form>
+        <?php endif; ?>
+        <?php include 'template/' . $template . '/comment.php';?>
       <?php elseif(!empty($result)): ?>
         <?php include 'template/' . $template . '/main.php'; ?>
       <?php else: ?>

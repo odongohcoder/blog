@@ -19,7 +19,8 @@ $adminmenu = [
   ],
   'write' => [
     'name' => 'Write',
-    'link' => 'admin/write.php',
+    // 'link' => 'admin/write.php',
+    'link' => 'index.php?article=new',
     'icon' => 'feather/feather.svg'
   ],
   'archive' => [

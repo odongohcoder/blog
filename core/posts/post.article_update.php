@@ -57,23 +57,45 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
   // Make sure errors are empty
   if(empty($title_err) && empty($subtitle_err) && empty($longcopy_err)){
 
-    // Delete longcopy from paragraph
-    $sql = 'DELETE FROM `paragraph` WHERE `postid` = :postid';
-    $param = [':postid'=>[$_GET["article"]]];
-    Write_DB($pdo,$sql,$param);
+    if ($_GET["article"] != 'new') {
 
-    // Write longcopy in order of appearance
-    if(!empty($longcopy)){
-      foreach ($longcopy as $item => $row){
-        $sql = 'INSERT INTO `paragraph` (`userid`, `paragraph`, `postid`, `item`) VALUES (:userid, :paragraph, :postid, :item)';
-        $param = [':userid'=>[$_SESSION['id']],':paragraph'=>[$row[1]],':postid'=>[$_GET["article"]],':item'=>[$row[0]]];
-        Write_DB($pdo,$sql,$param);
+      // -- START UPDATE -- //
+      // Delete longcopy from paragraph
+      $sql = 'DELETE FROM `paragraph` WHERE `postid` = :postid';
+      $param = [':postid'=>[$_GET["article"]]];
+      Write_DB($pdo,$sql,$param);
+      // Write longcopy in order of appearance
+      if(!empty($longcopy)){
+        foreach ($longcopy as $item => $row){
+          $sql = 'INSERT INTO `paragraph` (`userid`, `paragraph`, `postid`, `item`) VALUES (:userid, :paragraph, :postid, :item)';
+          $param = [':userid'=>[$_SESSION['id']],':paragraph'=>[$row[1]],':postid'=>[$_GET["article"]],':item'=>[$row[0]]];
+          Write_DB($pdo,$sql,$param);
+        }
       }
-    }
+      // Update title, subtitle and subject
+      $sql = 'UPDATE `post` SET `title`=:title, `subtitle`=:subtitle, `subject`=:subject, `date`=:datum WHERE `id` = :id AND `userid` = :userid';
+      $param = [':title'=>[$title],':subtitle'=>[$subtitle],':subject'=>[$subject[0]],':datum'=>[$datum],':id'=>[$_GET["article"]],':userid'=>[$_SESSION['id']]];
+      // -- END UPDATE -- //
 
-    // Update title, subtitle and subject
-    $sql = 'UPDATE `post` SET `title`=:title, `subtitle`=:subtitle, `subject`=:subject, `date`=:datum WHERE `id` = :id AND `userid` = :userid';
-    $param = [':title'=>[$title],':subtitle'=>[$subtitle],':subject'=>[$subject[0]],':datum'=>[$datum],':id'=>[$_GET["article"]],':userid'=>[$_SESSION['id']]];
+    } else {
+
+      // -- START INSERT -- //
+      $sql = 'INSERT INTO `post` (`userid`, `title`, `subtitle`, `subject`, `date`) VALUES (:userid, :title, :subtitle, :subject, :datum)';
+      $param = [':userid'=>[$_SESSION['id']],':title'=>[$title],':subtitle'=>[$subtitle],':subject'=>[$subject[0]],':datum'=>[$datum]];
+      Write_DB($pdo,$sql,$param);
+
+      $lastInsertId = $pdo->lastInsertId();
+
+      if(!empty($longcopy)){
+        foreach ($longcopy as $item => $row){
+          $sql = 'INSERT INTO `paragraph` (`userid`, `paragraph`, `postid`, `item`) VALUES (:userid, :paragraph, :postid, :item)';
+          $param = [':userid'=>[$_SESSION['id']],':paragraph'=>[$row[1]],':postid'=>[$lastInsertId],':item'=>[$row[0]]];
+          Write_DB($pdo,$sql,$param);
+        }
+      }
+      // -- END INSERT -- //
+
+    }
 
     if(Write_DB($pdo,$sql,$param) == true){
       header('location: ../../index.php?article='.$_GET["article"]);

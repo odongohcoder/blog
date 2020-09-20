@@ -1,11 +1,9 @@
 <?php
 defined('_BASE') ?: header('location: ../../index.php');
 $article = new Article();
+print_r($result[0]);
+$articleTest = new ArticleTest($result[0]);
 ?>
-
-    <?php if ($author): ?>
-      <form action="engine/posts/post.article_update.php?article=<?php echo $_GET["article"]; ?>" method="POST" enctype="multipart/form-data">
-    <?php endif; ?>
 
 		<div class="article-blog">
 			<article>
@@ -20,8 +18,8 @@ $article = new Article();
 					</div>
 					<div class="inner">
 						<div class="author">
-							<div class="users-image" style="background-image:url('img/users/<?php print $result[0]['users_image']; ?>')"></div>
-							<div class="users-name"><strong><?php echo $result[0]['name'];?></strong> on <?php echo date("d.m.y", strtotime($result[0]['date']));?></div>
+							<div class="users-image" style="background-image:url('img/users/<?php echo $articleTest->author_image; ?>')"></div>
+							<div class="users-name"><strong><?php echo $articleTest->author_name; ?></strong> on <?php echo date("d.m.y", strtotime($article->user($result[0]['date'])));?></div>
 						</div>
 					</div>
 				</div>
@@ -55,10 +53,3 @@ $article = new Article();
 				<?php endforeach;?>
 			</article>
 		</div>
-
-    <?php if ($author): ?>
-      <button type="submit" value="Add post">Update post</button>
-    </form>
-  <?php endif; ?>
-
-	<?php include 'template/' . $template . '/comment.php';?>

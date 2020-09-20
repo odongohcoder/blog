@@ -1,7 +1,7 @@
 <?php
 defined('_BASE') ?: header('location: ../../index.php');
 // Get comments data
-require_once 'engine/queries/db.comments.php';
+require_once 'core/queries/db.comments.php';
 ?>
 
 <?php if(!empty($comments)):?>
@@ -24,7 +24,7 @@ require_once 'engine/queries/db.comments.php';
 <!-- START COMMENT FORM-->
 <?php if (isset($_SESSION['email']) && _BASE):?>
 
-<form action="engine/posts/post.comment.php" method="POST" enctype="multipart/form-data">
+<form action="core/posts/post.comment.php" method="POST" enctype="multipart/form-data">
   <div class="outer">
     <div class="inner">
       <div id="Comments">

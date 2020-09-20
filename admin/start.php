@@ -11,14 +11,14 @@ require_once '../creds/db.php';
 // Include image sizes
 include_once '../array/sizes.php';
 // Include functions
-require_once '../engine/functions/function.read_db.php';
-require_once '../engine/functions/function.write_db.php';
-require_once '../engine/functions/function.specify_file.php';
-require_once '../engine/functions/function.upload_image.php';
+require_once '../core/functions/function.read_db.php';
+require_once '../core/functions/function.write_db.php';
+require_once '../core/functions/function.specify_file.php';
+require_once '../core/functions/function.upload_image.php';
 // Include classes
-require_once '../engine/classes/class.article.php';
+require_once '../core/classes/class.article.php';
 // Include queries
-require_once '../engine/queries/db.template.php';
+require_once '../core/queries/db.template.php';
 // Include menu items
 include_once '../array/links.php';
 

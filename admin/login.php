@@ -1,17 +1,17 @@
 <?php
 // Include paths
-include_once '../engine/constants/directory.php';
+include_once '../core/constants/directory.php';
 // Include db config
 require_once '../creds/db.php';
 // Include db config
-require_once '../engine/functions/function.read_db.php';
+require_once '../core/functions/function.read_db.php';
 // Include functions
-require_once '../engine/functions/function.read_db.php';
-require_once '../engine/functions/function.write_db.php';
-require_once '../engine/functions/function.specify_file.php';
-require_once '../engine/functions/function.upload_image.php';
+require_once '../core/functions/function.read_db.php';
+require_once '../core/functions/function.write_db.php';
+require_once '../core/functions/function.specify_file.php';
+require_once '../core/functions/function.upload_image.php';
 // Include settings
-require_once '../engine/queries/db.template.php';
+require_once '../core/queries/db.template.php';
 // Include meta vars
 include_once '../array/meta.php';
 // Include menu items

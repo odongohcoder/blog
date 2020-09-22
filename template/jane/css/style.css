@@ -283,6 +283,7 @@ small {
   font-size: 10px;
 }
 svg {
+  display: block;
   height:20px;
   width:auto;
 }
@@ -526,6 +527,7 @@ nav.menu ul li a,
 a.return,
 .switch {
   padding: 15px;
+  display: block;
 }
 nav.menu ul li a .users-image {
   float:none;

@@ -24,19 +24,31 @@ class Article {
     $this->setSelect($subjects,$this->subject_number);
   }
 
-  function setText($value,$name) {
-    global $author;
-    $author ? include('admin/inputTypeText.php') : print $value;
+  function authorImage() {
+    return $this->author_image;
   }
 
-  function setImage($key,$value) {
+  function authorName() {
+    return $this->author_name;
+  }
+
+  function date() {
+    return $this->date;
+  }
+
+  function setText($value,$name) {
     global $author;
-    include('admin/inputTypeFile.php');
+    $author ? include('core/inputs/input.TypeText.php') : print $value;
+  }
+
+  function setImage($value,$key) {
+    global $author;
+    include('core/inputs/input.TypeFile.php');
   }
 
   function setSelect($list,$selected) {
     global $author;
-    include('admin/inputTypeSelect.php');
+    include('core/inputs/input.TypeSelect.php');
   }
 
 }

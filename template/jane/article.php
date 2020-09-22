@@ -16,8 +16,8 @@ $article = new Article($result[0]);
 					</div>
 					<div class="inner">
 						<div class="author">
-							<div class="users-image" style="background-image:url('img/users/<?php echo $article->author_image; ?>')"></div>
-							<div class="users-name"><strong><?php echo $article->author_name; ?></strong> on <?php echo date("d.m.y", strtotime($article->date));?></div>
+							<div class="users-image" style="background-image:url('img/users/<?php echo $article->authorImage(); ?>')"></div>
+							<div class="users-name"><strong><?php echo $article->authorName(); ?></strong> on <?php echo date("d.m.y", strtotime($article->date()));?></div>
 						</div>
 					</div>
 				</div>
@@ -25,7 +25,7 @@ $article = new Article($result[0]);
 				<?php foreach($paragraph as $key => $row):?>
 					<?php if ($row['item'] == 'img'):?>
 						<div class="header-image">
-              <?php $article->setImage($key,$row['paragraph']); ?>
+              <?php $article->setImage($row['paragraph'],$key); ?>
 						</div>
 					<?php elseif($row['item'] == 'txt'):?>
 						<div class="outer">

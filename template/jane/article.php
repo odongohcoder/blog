@@ -1,8 +1,6 @@
 <?php
 defined('_BASE') ?: header('location: ../../index.php');
-$article = new Article();
-print_r($result[0]);
-$articleTest = new ArticleTest($result[0]);
+$article = new Article($result[0]);
 ?>
 
 		<div class="article-blog">
@@ -10,16 +8,16 @@ $articleTest = new ArticleTest($result[0]);
 
 				<div class="outer">
 					<div class="inner">
-            <?php $article->set_select($subjects,$result[0][5]); ?>
+            <?php $article->subject(); ?>
 					</div>
 					<div class="inner">
-            <h1><?php $article->set_text($result[0]['title'],'title'); ?></h1>
-            <h2><?php $article->set_text($result[0]['subtitle'],'subtitle'); ?></h2>
+            <h1><?php $article->title(); ?></h1>
+            <h2><?php $article->subtitle(); ?></h2>
 					</div>
 					<div class="inner">
 						<div class="author">
-							<div class="users-image" style="background-image:url('img/users/<?php echo $articleTest->author_image; ?>')"></div>
-							<div class="users-name"><strong><?php echo $articleTest->author_name; ?></strong> on <?php echo date("d.m.y", strtotime($article->user($result[0]['date'])));?></div>
+							<div class="users-image" style="background-image:url('img/users/<?php echo $article->author_image; ?>')"></div>
+							<div class="users-name"><strong><?php echo $article->author_name; ?></strong> on <?php echo date("d.m.y", strtotime($article->date));?></div>
 						</div>
 					</div>
 				</div>
@@ -27,12 +25,12 @@ $articleTest = new ArticleTest($result[0]);
 				<?php foreach($paragraph as $key => $row):?>
 					<?php if ($row['item'] == 'img'):?>
 						<div class="header-image">
-              <?php $article->set_image($key,$row['paragraph']); ?>
+              <?php $article->setImage($key,$row['paragraph']); ?>
 						</div>
 					<?php elseif($row['item'] == 'txt'):?>
 						<div class="outer">
 							<div class="inner">
-                <p><?php $article->set_text($row['paragraph'],'longcopy['.$key.']'); ?></p>
+                <p><?php $article->setText($row['paragraph'],'longcopy['.$key.']'); ?></p>
 							</div>
 						</div>
 					<?php elseif($row['item'] == 'audio'):?>
@@ -47,7 +45,7 @@ $articleTest = new ArticleTest($result[0]);
 					<?php endif; ?>
           <?php if ($row['caption']): ?>
             <small>
-              <?php $article->set_text($row['caption'],'longcopy['.$key.']'); ?>
+              <?php $article->setText($row['caption'],'longcopy['.$key.']'); ?>
             </small>
           <?php endif; ?>
 				<?php endforeach;?>

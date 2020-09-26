@@ -41,7 +41,7 @@ class Article {
     $author ? include('core/inputs/input.TypeText.php') : print $value;
   }
 
-  function setImage($value,$key) {
+  function setImage($value,$key,$id) {
     global $author;
     include('core/inputs/input.TypeFile.php');
   }

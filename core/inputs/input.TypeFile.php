@@ -1,4 +1,4 @@
-<input type="checkbox" id="deleteImage<?php echo $key; ?>" name="" value="<?php echo $key; ?>">
+<input type="checkbox" id="deleteImage<?php echo $key; ?>" name="delete_paragraph[]" value="<?php echo $id; ?>">
 <img src="img/article/<?php print $value; ?>">
 
 <?php if($author): ?>

@@ -24,7 +24,7 @@ defined('_BASE') ?: header('location: ../../index.php');
 				<?php foreach($paragraph as $key => $row):?>
 					<?php if ($row['item'] == 'img'):?>
 						<div class="header-image">
-              <?php $article->setImage($row['paragraph'],$key); ?>
+              <?php $article->setImage($row['paragraph'],$key,$row['id']); ?>
 						</div>
 					<?php elseif($row['item'] == 'txt'):?>
 						<div class="outer">

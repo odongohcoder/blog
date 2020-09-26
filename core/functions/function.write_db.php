@@ -10,7 +10,6 @@ function Write_DB($pdo,$sql,$param){
     }
   }
   $stmt->execute();
-  return true;
 }
 
 ?>

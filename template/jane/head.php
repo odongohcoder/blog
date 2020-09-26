@@ -58,4 +58,6 @@ defined('_BASE') ?: header('location: ../../index.php');
 		<link href="<?php echo _BASE;?>template/<?php echo $template;?>/css/normalize.css" rel="stylesheet">
 		<link href="<?php echo _BASE;?>template/<?php echo $template;?>/css/style.css" rel="stylesheet">
 
+		<!-- <script src="https://cdn.tiny.cloud/1/u8l3zrganedogzvipy2p4nso0w75u7027og80br238a6ewu5/tinymce/5/tinymce.min.js" referrerpolicy="origin"/></script> -->
+
 	</head>

@@ -1,6 +1,5 @@
 <?php
 defined('_BASE') ?: header('location: ../../index.php');
-$article = new Article($result[0]);
 ?>
 
 		<div class="article-blog">

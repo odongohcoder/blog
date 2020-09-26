@@ -54,8 +54,10 @@ isset($_GET["article"]) ?: $meta["META_TITLE"] = 'Sincerity';
         <?php if ($author): ?>
           <form action="core/posts/post.article_update.php?article=<?php echo $_GET["article"]; ?>" method="POST" enctype="multipart/form-data">
         <?php endif; ?>
+        <?php $article = new Article($result[0]); ?>
         <?php include 'template/' . $template . '/article.php'; ?>
         <?php if ($author): ?>
+          <?php include 'core/include/addfields.php'; ?>
             <button type="submit" value="Add post">Update post</button>
           </form>
         <?php endif; ?>

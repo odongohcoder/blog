@@ -11,3 +11,5 @@
     <input type="file" id="editImage<?php echo $key; ?>" name="longcopy[<?php echo $key; ?>]" accept="image/*" class="imageinput <?php echo (!empty($image_err)) ? 'is-invalid' : ''; ?>">
   </span>
 <?php endif; ?>
+
+<input type="hidden" name="file_name[<?php echo $key; ?>]" value="<?php echo $value; ?>">

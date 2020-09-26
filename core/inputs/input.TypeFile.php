@@ -1,10 +1,11 @@
+<input type="checkbox" id="deleteImage<?php echo $key; ?>" name="" value="<?php echo $key; ?>">
 <img src="img/article/<?php print $value; ?>">
 
 <?php if($author): ?>
   <span class="editImageButton">
-    <button type="submit" value="Delete">
+    <label for="deleteImage<?php echo $key; ?>" class="button">
       <?php print file_get_contents("img/icon/feather/trash-2.svg"); ?>
-    </button>
+    </label>
     <label for="editImage<?php echo $key; ?>" class="button">
       <?php print file_get_contents("img/icon/feather/upload.svg"); ?>
     </label>

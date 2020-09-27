@@ -52,7 +52,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     }
   }
   // Combine 2 dimensional arrays and sort in order of appearance
-  $longcopy = array_filter($longcopy_text) + array_filter($longcopy_files);
+  $longcopy = array_filter($longcopy_text);
+  (!isset($longcopy_files)) ?: $longcopy += array_filter($longcopy_files);
   ksort($longcopy);
 
   // Make sure errors are empty
@@ -124,7 +125,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     }
 
     if(empty($title_err)){
-      header('location: ../../index.php?article='.$_GET["article"]);
+      header('location: ../../index.php?article='.(($_GET["article"] != 'new') ? $_GET["article"] : $lastInsertId));
       // foreach ($paramdebug as $item => $row){
       //   print_r($row);
       //   echo '<br>';

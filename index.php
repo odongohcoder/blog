@@ -50,7 +50,7 @@ isset($_GET["article"]) ?: $meta["META_TITLE"] = 'Sincerity';
     ?>
     <!-- START CONTAINER -->
     <div class="container">
-      <?php if (isset($_GET["article"])): ?>
+      <?php if (isset($_GET["article"]) && isset($result[0])): ?>
         <?php if ($author): ?>
           <form action="core/posts/post.article.php?article=<?php echo $_GET["article"]; ?>" method="POST" enctype="multipart/form-data">
         <?php endif; ?>

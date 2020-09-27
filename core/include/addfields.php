@@ -48,9 +48,3 @@ function addImageField() {
   ++i;
 }
 </script>
-
-<!-- <script>
-tinymce.init({
-  selector: '#longcopy0'
-});
-</script> -->

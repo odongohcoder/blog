@@ -36,23 +36,23 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
   if (isset($_FILES['longcopy']['name'])) {
     $longcopy_files = $_FILES['longcopy']['name'];
     foreach ($longcopy_files as $key => $val){
-      (!empty($val)) ?: $val = $_POST['file_name'][$key];
-      // (!empty($val)) ?: $image_err = 'Please upload image';
+      if (isset($_POST['file_name'][$key])){
+        (!empty($val)) ?: $val = $_POST['file_name'][$key];
+      }
       $longcopy_files[$key] = [];
-      array_push($longcopy_files[$key], 'img', $val);
+      (empty($val)) ?: array_push($longcopy_files[$key], 'img', $val);
     }
   }
   // Create 2 dimensional arrays of textarea
   if (!empty($_POST['longcopy'])) {
     $longcopy_text = $_POST['longcopy'];
     foreach ($longcopy_text as $key => $val){
-      // (!empty($val)) ?: $longcopy_err = 'Please enter longcopy' ;
       $longcopy_text[$key] = [];
       array_push($longcopy_text[$key], 'txt', $val);
     }
   }
   // Combine 2 dimensional arrays and sort in order of appearance
-  $longcopy = $longcopy_text + $longcopy_files;
+  $longcopy = array_filter($longcopy_text) + array_filter($longcopy_files);
   ksort($longcopy);
 
   // Make sure errors are empty
@@ -63,6 +63,23 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     //   print_r($row);
     //   echo '<br>';
     // }
+
+    if($_FILES){
+      foreach ($_FILES['longcopy']['name'] as $i => $fileName){
+        $fileSize = $_FILES['longcopy']['size'][$i];
+        $fileTmpName  = $_FILES['longcopy']['tmp_name'][$i];
+        $fileType = $_FILES['longcopy']['type'][$i];
+        if($fileName){
+          if(Specify_File($fileName) != 'img'){
+            $image_err = 'Please upload a JPG, PNG or GIF file';
+          } elseif($fileSize > 2000000){
+            $image_err = 'Please upload a file less than or equal to 2MB';
+          } elseif(empty($image_err) && empty($title_err) && empty($subtitle_err) && empty($longcopy_err)){
+            Upload_Image($fileTmpName,$fileName);
+          }
+        }
+      }
+    }
 
     if ($_GET["article"] != 'new') {
 
@@ -82,6 +99,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
       // Update title, subtitle and subject
       $sql = 'UPDATE `post` SET `title`=:title, `subtitle`=:subtitle, `subject`=:subject, `date`=:datum WHERE `id` = :id AND `userid` = :userid';
       $param = [':title'=>[$title],':subtitle'=>[$subtitle],':subject'=>[$subject[0]],':datum'=>[$datum],':id'=>[$_GET["article"]],':userid'=>[$_SESSION['id']]];
+      Write_DB($pdo,$sql,$param);
       // -- END UPDATE -- //
 
     } else {
@@ -106,9 +124,10 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
     if(empty($title_err)){
       header('location: ../../index.php?article='.$_GET["article"]);
-      // print_r($_POST);
-      // echo '<br>';
-      // print_r($_SESSION);
+      // foreach ($paramdebug as $item => $row){
+      //   print_r($row);
+      //   echo '<br>';
+      // }
     } else {
       die('Something went wrong');
     }

@@ -12,11 +12,11 @@ class Article {
   }
 
   function title() {
-    $this->setText($this->title,'title');
+    $this->setText($this->title,'title',null);
   }
 
   function subtitle() {
-    $this->setText($this->subtitle,'subtitle');
+    $this->setText($this->subtitle,'subtitle',null);
   }
 
   function subject() {
@@ -36,7 +36,7 @@ class Article {
     return $this->date;
   }
 
-  function setText($value,$name) {
+  function setText($value,$name,$id) {
     global $author;
     $author ? include('core/inputs/input.TypeText.php') : print $value;
   }

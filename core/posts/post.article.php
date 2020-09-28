@@ -22,6 +22,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
   $title =  isset($_POST['title']) ? trim($_POST['title']) : '';
   $subtitle =  isset($_POST['subtitle']) ? trim($_POST['subtitle']) : '';
   $subject =  isset($_POST['subject']) ? trim($_POST['subject']) : '';
+  $deletedParagraph = isset($_POST['delete_paragraph']) ? $_POST['delete_paragraph'] : '';
 
   // Validate title
   if(empty($title)){
@@ -59,12 +60,6 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
   // Make sure errors are empty
   if(empty($title_err) && empty($subtitle_err) && empty($longcopy_err)){
 
-    // print_r($longcopy);
-    // foreach ($longcopy as $item => $row){
-    //   print_r($row);
-    //   echo '<br>';
-    // }
-
     // Upload image
     if($_FILES){
       foreach ($_FILES['longcopy']['name'] as $i => $fileName){
@@ -86,6 +81,14 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     if ($_GET["article"] != 'new') {
 
       // -- START UPDATE -- //
+      // Remove selected paragraphs from post
+      if(!empty($deletedParagraph)){
+        foreach ($deletedParagraph as $key => $val){
+          $sql = $sql = 'UPDATE `paragraph` SET `postid` = :postid WHERE `id` = :id AND `userid` = :userid';
+          $param = [':postid'=>[NULL],':id'=>[$val],':userid'=>[$_SESSION['id']]];
+          Write_DB($pdo,$sql,$param);
+        }
+      }
       // Delete longcopy from paragraph
       $sql = 'DELETE FROM `paragraph` WHERE `postid` = :postid';
       $param = [':postid'=>[$_GET["article"]]];
@@ -125,11 +128,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     }
 
     if(empty($title_err)){
-      header('location: ../../index.php?article='.(($_GET["article"] != 'new') ? $_GET["article"] : $lastInsertId));
-      // foreach ($paramdebug as $item => $row){
-      //   print_r($row);
-      //   echo '<br>';
-      // }
+      // header('location: ../../index.php?article='.(($_GET["article"] != 'new') ? $_GET["article"] : $lastInsertId));
+
     } else {
       die('Something went wrong');
     }

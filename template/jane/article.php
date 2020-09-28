@@ -29,7 +29,7 @@ defined('_BASE') ?: header('location: ../../index.php');
 					<?php elseif($row['item'] == 'txt'):?>
 						<div class="outer">
 							<div class="inner">
-                <p><?php $article->setText($row['paragraph'],'longcopy['.$key.']'); ?></p>
+                <p><?php $article->setText($row['paragraph'],'longcopy['.$key.']',$row['id']); ?></p>
 							</div>
 						</div>
 					<?php elseif($row['item'] == 'audio'):?>
